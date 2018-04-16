@@ -1,0 +1,305 @@
+\documentclass[$if(fontsize)$$fontsize$,$endif$a4paper,twoside,onecolumn,openright,titlepage]{book}
+
+% font settings
+\usepackage[T1]{fontenc}
+\usepackage[charter]{mathdesign}
+\usepackage[scaled]{beramono}
+% \renewcommand{\sfdefault}{uop}
+% \renewcommand{\scshape}{%
+%   \not@math@alphabet\scshape\relax
+%   \ifthenelse{\equal{\f@family}{uop}}%
+%     {\fontshape{sc}\selectfont}%
+%     {\fontshape{fsc}\selectfont}%
+% }
+\usepackage{textcomp} % helper with clean symbols like copyright, registered
+
+% hyperref
+$if(hyper)$
+\usepackage[unicode,plainpages=false,pdfpagelabels,breaklinks]{hyperref}
+\usepackage[all]{hypcap}
+$endif$
+
+% sans-serif section titles
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+% geometry
+\usepackage[a4paper]{geometry}
+\geometry{hscale=0.66}
+$if(printversion)$
+$else$
+\geometry{asymmetric}
+\geometry{bindingoffset=0pt,hmarginratio=1:1}
+$endif$
+
+% fancy headers
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+\fancypagestyle{cover}{
+  \fancyhf{}
+  \fancyhead{\mbox{ }}
+}
+\fancypagestyle{hrulefpage}{
+  \fancyhf{}
+   \fancyhead{\mbox{ }}
+  \fancyfoot[C]{\textsf{\thepage}}
+}
+
+% captions
+\usepackage[font=sf,labelsep=period]{caption}
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+}
+
+% title page
+\makeatletter
+\renewcommand{\maketitle}
+{
+\pagenumbering{Alph}
+\begin{titlepage}
+  \pagestyle{cover}
+  \begin{center}
+    \null
+    \vfill
+    \noindent {\LARGE \textbf{\sffamily $title$}}\\[6mm]
+    $if(subtitle)$
+      \noindent{\large \textbf{\sffamily $subtitle$}}\\
+    $endif$
+    \vspace{10mm}
+    {Master's Thesis submitted to the}\\[2mm]
+    {$faculty$ of the \em{$university$}}\\[2mm]
+    {in partial fulfillment of the requirements for the degree of}\\[2mm]
+    {$degree$}
+    $if(specialization)$
+      {\\[2mm] $specialization$\\[16mm]}
+    $else$
+      {\\[32mm]}
+    $endif$
+    {presented by}\\[2mm]
+    {\Large \textbf{\sffamily $author$}}
+    \vfill
+    \vfill
+    {under the supervision of}\\[2mm]
+    {\large $for(advisor)$$if(advisor.title)$$advisor.title$\ $endif$ $advisor.name$$sep$, $endfor$}
+    $if(coadvisor)$
+      \\[2mm] co-supervised by\\[2mm]
+      {\large $for(coadvisor)$$if(coadvisor.title)$$coadvisor.title$\ $endif$ $coadvisor.name$$sep$, $endfor$}
+    $endif$
+    \vfill
+    {$date.month$\ $date.year$}\\
+  \end{center}
+  \end{titlepage}
+  \setcounter{footnote}{0}
+}
+\renewenvironment{titlepage}{
+  \cleardoublepage
+  \setcounter{page}\z@
+}{\newpage}
+\makeatother
+
+% epigraph
+$if(epigraph)$
+\usepackage{epigraph}
+\setlength{\epigraphrule}{0pt}
+$endif$
+
+% frontmatter
+\makeatletter
+\renewcommand{\frontmatter}{
+  \@mainmatterfalse
+  \pagenumbering{Roman}
+  \clearpage
+  \thispagestyle{empty}
+  \mbox{}
+  $if(copyright)$
+    $if(copyright.notice)$
+      {\vfill\noindent $copyright.notice$}
+    $else$
+      {\vfill\noindent Copyright \copyright\ $date.year$\ by $author$ \\ All rights reserved.}
+    $endif$
+  $endif$
+  \clearpage
+  \pagestyle{empty}
+  \pagenumbering{roman}
+  \setcounter{page}{1}
+  \pagestyle{hrulefpage}
+  I certify that except where due acknowledgement has been given, the
+  work presented in this thesis is that of the author alone; the work
+  has not been submitted previously, in whole or in part, to qualify for
+  any other academic award; and the content of the thesis is the result
+  of work which has been carried out since the official commencement
+  date of the approved research program.\\[18mm]
+
+
+  \hfill
+  \begin{minipage}{6cm}
+    \rule{6cm}{0.2mm}
+
+    $author$
+
+    $place$, $date.day$\ $date.month$\ $date.year$
+  \end{minipage}
+  \clearpage
+  \thispagestyle{empty}
+  \cleardoublepage
+  \pagestyle{plain}
+  $if(dedication)$
+    \vspace*{5cm}
+    \begin{flushright}
+      {\Large \emph{$dedication$}}
+    \end{flushright}
+    \cleardoublepage
+  $endif$
+  $if(epigraph)$
+    \vspace*{5cm}
+    \epigraph{$epigraph.text$}{$epigraph.source$}
+    \cleardoublepage
+  $endif$
+  \fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\textsf{\thepage}}
+    \renewcommand{\headrulewidth}{0pt}
+  }
+  \pagestyle{fancy}
+  \renewcommand{\chaptermark}[1]{\markboth{\ ##1}{}}
+  \renewcommand{\sectionmark}[1]{\markright{\thesection\ ##1}}
+  $if(printversion)$
+    \fancyhead{}
+    \fancyhead[LE, RO]{\textsf{\thepage}}
+    \fancyhead[RE]{\textsf{\leftmark}}
+    \fancyhead[LO]{\textsf{\rightmark}}
+  $else$
+  \fancyhead{}
+  \fancyhead[RO, RE]{\textsf{\rightmark}}
+  \fancyhead[LO, LE]{\textsf{\thepage}}
+  $endif$
+  \fancyfoot{}
+  \newcounter{oldpage}
+  \setcounter{oldpage}{\value{page}}
+  \pagenumbering{roman}
+  \setcounter{page}{\value{oldpage}}
+}
+\makeatother
+
+% abstract
+\newenvironment{abstract}[1][Abstract]{
+  \chapter*{#1\markboth{#1}{}}
+}
+
+% acknowledgments
+\newenvironment{acknowledgements}{
+  \chapter*{Acknowledgements\markboth{Acknowledgements}{}}
+}{\cleardoublepage}
+
+\renewcommand\listfigurename{Figures}
+\renewcommand\listtablename{Tables}
+\makeatletter
+\renewcommand\tableofcontents{
+  $if(hyper)$
+  \phantomsection
+  $endif$
+  \addcontentsline{toc}{chapter}{\contentsname}
+  \chapter*{\contentsname
+    \@mkboth{\contentsname}{\contentsname}
+  }
+  \@starttoc{toc}
+  \cleardoublepage
+}
+
+\renewcommand\listoffigures{
+  $if(hyper)$
+  \phantomsection
+  $endif$
+  \addcontentsline{toc}{chapter}{List of \listfigurename}
+  \chapter*{\listfigurename}
+  \@mkboth{\listfigurename}{\listfigurename}
+  \@starttoc{lof}
+  \cleardoublepage
+}
+
+\renewcommand\listoftables{
+  $if(hyper)$
+  \phantomsection
+  $endif$
+  \addcontentsline{toc}{chapter}{List of \listtablename}
+  \chapter*{\listtablename}
+  \@mkboth{\listtablename}{\listtablename}
+  \@starttoc{lot}
+}
+
+\renewenvironment{theindex}{
+  \twocolumn[\@makeschapterhead{\indexname}]
+  $if(hyper)$
+  \phantomsection
+  $endif$
+	\addcontentsline{toc}{chapter}{\indexname}
+  \@mkboth{\indexname}{\indexname}
+  \thispagestyle{plain}\parindent\z@
+  \parskip\z@ \@plus .3\p@\relax
+  \columnseprule \z@
+  \columnsep 35\p@
+  \let\item\@idxitem
+}{}
+
+\renewenvironment{theindex}{
+  \twocolumn[\makeschapterhead{\indexname}]
+  	\addcontentsline{toc}{chapter}{\indexname}
+  \markboth{\indexname}{\indexname}%
+  \thispagestyle{plain}\parindent\z@
+  \parskip\z@ \@plus .3\p@\relax
+  \columnseprule \z@
+  \columnsep 35\p@
+  \let\item\@idxitem
+}{}
+\makeatother
+
+% misc
+\renewcommand{\baselinestretch}{1.05}
+\usepackage{lipsum}
+\usepackage{listings}
+
+\lstdefinelanguage{algebra}
+{morekeywords={import,sort,constructors,observers,transformers,axioms,if,
+else,end},
+sensitive=false,
+morecomment=[l]{//s},
+}
+% \usepackage{booktabs}
+\usepackage{graphicx}
+% \usepackage{url}
+\usepackage{amsmath}
+\usepackage[square]{natbib}
+% \usepackage{datatool}
+% \usepackage{calc}
+
+\begin{document}
+\maketitle
+\frontmatter
+\begin{abstract}
+  \input{$abstract_file$}
+\end{abstract}
+\begin{acknowledgements}
+  \input{$acknowledgements_file$}
+\end{acknowledgements}
+\tableofcontents
+\listoffigures
+\listoftables
+\mainmatter
+
+$body$
+
+\backmatter
+
+\chapter{Glossary} %optional
+
+%\bibliographystyle{alpha}
+%\bibliographystyle{dcu}
+\bibliographystyle{plainnat}
+\bibliography{biblio}
+
+%\cleardoublepage
+%\theindex %optional, use only if you have an index, must use
+	  %\makeindex in the preamble
+\end{document}
