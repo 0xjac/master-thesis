@@ -1,6 +1,6 @@
 
 ifndef OUTPUT
-	OUTPUT:=$(shell grep index.md -e "^generated_file: " | sed -e 's/generated_file: //' -e 's/ //g')
+	OUTPUT:=$(shell grep metadata.yml -e "^generated_file: " | sed -e 's/generated_file: //' -e 's/ //g')
 endif
 
 ifndef BUILD
@@ -18,11 +18,11 @@ build debug: .build-dir abstract.md acknowledgements.md
 	pandoc --number-sections --template=template/template.tex --pdf-engine=xelatex --toc \
 		--from markdown+tex_math_dollars+tex_math_single_backslash \
 		--variable="abstract_file:$(BUILD)/abstract.tex" --variable="acknowledgements_file:$(BUILD)/acknowledgements.tex" \
-		--output "$(OUTPUT).$(EXT)" index.md chapters/chapter*.md
+		--output "$(OUTPUT).$(EXT)" metadata.yml chapters/chapter*.md
 
 readme:
-	pandoc --from markdown --to gfm --template=template/readme.template.md --output=README.md index.md
-	sed -ie '/<p align="center" style="font-size:larger;">/,/<\/p>/s/  /<br\ \/>/g' README.md
+	pandoc --from markdown --to gfm --template=template/readme.template.md --output=README.md metadata.yml
+	sed -i '' -e '/<p align="center" style="font-size:larger;">/,/<\/p>/s/  /<br\ \/>/g' README.md
 
 abstract.md: SNIPPET_FILE=abstract
 acknowledgements.md: SNIPPET_FILE=acknowledgements
