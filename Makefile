@@ -18,7 +18,7 @@ build debug: .build-dir abstract.md acknowledgements.md
 	pandoc --number-sections --template=template/template.tex --pdf-engine=xelatex --toc \
 		--from markdown+tex_math_dollars+tex_math_single_backslash \
 		--variable="abstract_file:$(BUILD)/abstract.tex" --variable="acknowledgements_file:$(BUILD)/acknowledgements.tex" \
-		--output "$(OUTPUT).$(EXT)" metadata.yml chapters/chapter*.md
+		--output "$(OUTPUT).$(EXT)" metadata.yml chapters/*.md
 
 readme:
 	pandoc --from markdown --to gfm --template=template/readme.template.md --output=README.md metadata.yml
