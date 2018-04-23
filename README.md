@@ -1,7 +1,7 @@
 # Master Thesis
 [![License](https://img.shields.io/github/license/jacquesd/master-thesis.svg)](https://github.com/jacquesd/master-thesis/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/jacquesd/master-thesis.svg?branch=master)](https://travis-ci.org/jacquesd/master-thesis)
-[![PDF](https://img.shields.io/badge/PDF-latest-orange.svg?style=flat)](https://github.com/jacquesd/master-thesis/blob/master-pdf/JacquesDafflon-masterthesis.pdf)
+[![PDF](https://img.shields.io/badge/PDF-latest-blue.svg?style=flat)](https://github.com/jacquesd/master-thesis/blob/master-pdf/JacquesDafflon-masterthesis.pdf)
 
 This repository contains the report for the master thesis:
 
@@ -16,7 +16,7 @@ tokenized loyalty points</i>
 written by Jacques Dafflon, under the supervision of Prof. Cesare Pautasso (advisor)  and  Mr. Thomas Shababi (coadvisor), submitted to the Faculty of Informatics of the Università della Svizzera Italiana, Switzerland.
 
 
-# License
+## License
 This thesis is made available under the Creative Commons Public License, Attribution-ShareAlike 4.0
 International. A copy of the full license is available in the [LICENSE](/LICENSE) file.
 

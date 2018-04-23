@@ -8,7 +8,7 @@ ifndef BUILD
 endif
 
 .PHONY: build clean abstract.md acknowledgements.md
-.ONESHELL: build abstract.md acknowledgements.md .build-dir .gentexsnippet
+.ONESHELL: build abstract.md acknowledgements.md .build-dir
 
 build: EXT=pdf
 debug: EXT=tex
