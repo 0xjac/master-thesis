@@ -11,7 +11,7 @@ before_install:
 script:
   - "export PDF_OUTPUT=$(grep metadata.yml -e '^generated_file: '  | sed -e 's/generated_file: //' -e 's/ //g')"
   - mkdir _out
-  - make build OUTPUT="_out/$PDF_OUTPUT"
+  - make build DIST_DIR="./_out/"
 
 deploy:
   local-dir: _out

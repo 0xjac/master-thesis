@@ -30,4 +30,8 @@ username: jacquesd
 repo:
  name: master-thesis
 generated_file: JacquesDafflon-masterthesis
+bibliography: references
 ---
+
+\defcitealias{eipssite}{EIPs}
+\defcitealias{eipxtemplate}{EIP-X}

@@ -1,24 +1,42 @@
-
-ifndef OUTPUT
-	OUTPUT:=$(shell grep metadata.yml -e "^generated_file: " | sed -e 's/generated_file: //' -e 's/ //g')
-endif
-
 ifndef BUILD
 	BUILD:=build
 endif
 
+ifndef BIBLIOGRAPHY
+	BIBLIOGRAPHY:=$(shell grep metadata.yml -e "^bibliography: " | sed -e 's/bibliography: //' -e 's/ //g')
+endif
+
+ifndef GLOSSARY
+	GLOSSARY:=$(shell grep metadata.yml -e "^glossary: " | sed -e 's/glossary: //' -e 's/ //g')
+endif
+
+ifndef OUTPUT_FILE
+	OUTPUT_FILE:=$(shell grep metadata.yml -e "^generated_file: " | sed -e 's/generated_file: //' -e 's/ //g')
+endif
+
+ifndef DIST_DIR
+  DIST_DIR:=./
+endif
+
+OUTPUT:=$(BUILD)/$(OUTPUT_FILE)
+
 .PHONY: build clean abstract.md acknowledgements.md
-.ONESHELL: build abstract.md acknowledgements.md .build-dir
+.ONESHELL: build debug abstract.md acknowledgements.md .build-dir .gen-tex .tex
 
-build: EXT=pdf
-debug: EXT=tex
-debug: OUTPUT=debug
+build: .tex clean
 
-build debug: .build-dir abstract.md acknowledgements.md
-	pandoc --number-sections --template=template/template.tex --pdf-engine=xelatex --toc \
-		--from markdown+tex_math_dollars+tex_math_single_backslash \
-		--variable="abstract_file:$(BUILD)/abstract.tex" --variable="acknowledgements_file:$(BUILD)/acknowledgements.tex" \
-		--output "$(OUTPUT).$(EXT)" metadata.yml chapters/*.md
+debug: .tex
+
+.tex: .gen-tex
+	echo "$(OUTPUT)"
+	cp "glossary.tex" "$(BUILD)/glossary.tex"
+	cp "$(BIBLIOGRAPHY).bib" "$(BUILD)/$(BIBLIOGRAPHY).bib"
+	xelatex -output-directory="$(BUILD)" "$(OUTPUT)"
+	makeglossaries -d "$(BUILD)" "$(OUTPUT_FILE)"
+	bibtex "$(OUTPUT)"
+	xelatex -output-directory="$(BUILD)"  "$(OUTPUT)"
+	xelatex -output-directory="$(BUILD)" "$(OUTPUT)"
+	mv "$(OUTPUT).pdf" "$(DIST_DIR)"
 
 readme:
 	pandoc --from markdown --to gfm --template=template/readme.template.md --output=README.md metadata.yml
@@ -33,6 +51,13 @@ abstract.md acknowledgements.md:
 
 clean:
 	rm -rf build
+	rm -rf "$(OUTPUT)."{aux,bbl,blg,lof,log,lot,out,tex,toc}
 
 .build-dir:
 	mkdir -p build
+
+.gen-tex: .build-dir abstract.md acknowledgements.md
+	pandoc --number-sections --template=template/template.tex --toc --listings \
+	  --from markdown+tex_math_dollars+tex_math_single_backslash --natbib \
+		--variable="abstract_file:$(BUILD)/abstract.tex" --variable="acknowledgements_file:$(BUILD)/acknowledgements.tex" \
+		--output "$(OUTPUT).tex" metadata.yml chapters/*.md
