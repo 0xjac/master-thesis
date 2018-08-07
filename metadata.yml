@@ -1,17 +1,16 @@
 ---
-title: |
-  | ERC777 the new token standard,
-  | and trust-less payment channel
-  | tokenized loyalty points
+title: ERC777
+subtitle: |
+  | A New Advanced Token Standard
+  | For The Ethereum Blockchain
 author: Jacques Dafflon
 advisor:
   title: Prof.
   name: Cesare Pautasso
   affiliation: Università della Svizzera Italiana, Switzerland
 coadvisor:
-  title: Mr.
+  title:
   name: Thomas Shababi
-  affiliation: Bity SA, Switzerland
 date:
   year: 2018
   month: June

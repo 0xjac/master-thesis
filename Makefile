@@ -40,7 +40,7 @@ debug: .tex
 
 readme:
 	pandoc --from markdown --to gfm --template=template/readme.template.md --output=README.md metadata.yml
-	sed -i '' -e '/<p align="center" style="font-size:larger;">/,/<\/p>/s/  /<br\ \/>/g' README.md
+	sed -i '' -Ee '/<p align="center" style="font-size:(large|larger);">/,/<\/p>/s/  /<br\ \/>/g' README.md
 
 abstract.md: SNIPPET_FILE=abstract
 acknowledgements.md: SNIPPET_FILE=acknowledgements

@@ -8,12 +8,14 @@ This repository contains the report for the master thesis:
 
 
 <p align="center" style="font-size:larger;">
-<i>ERC777 the new token standard,<br />
-and trust-less payment channel<br />
-tokenized loyalty points</i>
+<i>ERC777</i>
+</p>
+<p align="center" style="font-size:large;">
+<i>A New Advanced Token Standard<br />
+For The Ethereum Blockchain</i>
 </p>
 
-written by Jacques Dafflon, under the supervision of Prof. Cesare Pautasso (advisor)  and  Mr. Thomas Shababi (coadvisor), submitted to the Faculty of Informatics of the Università della Svizzera Italiana, Switzerland.
+written by Jacques Dafflon, under the supervision of Prof. Cesare Pautasso (advisor)  and   Thomas Shababi (coadvisor), submitted to the Faculty of Informatics of the Università della Svizzera Italiana, Switzerland.
 
 
 ## License

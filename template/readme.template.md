@@ -14,6 +14,11 @@ This repository contains the report for the master thesis:
 <p align="center" style="font-size:larger;">
 <i>$title$</i>
 </p>
+$if(subtitle)$
+<p align="center" style="font-size:large;">
+<i>$subtitle$</i>
+</p>
+$endif$
 
 written by $author$, under the supervision of $advisor.title$ $advisor.name$ (advisor) $if(coadvisor)$ and  $coadvisor.title$ $coadvisor.name$ (coadvisor)$endif$, submitted to the $faculty$ of the $university$.
 
