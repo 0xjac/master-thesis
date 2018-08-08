@@ -10,6 +10,7 @@
 
 ## Motivation
 
+Ethereum is a custom built blockchain which provides a decentralized computing platform.
 Ethereum is decentralized platform running on a custom built blockchain.
 Similarly to Bitcoin and other blockchains it suffers of a few issues. One of the most prominent one being the slow transaction speed. The Ethereum network can handle at best 15 transactions per second---Bitcoin is even worse with 3 or 4 transactions per second---which is clearly insufficient for a global daily usage. By comparison, VisaNet is theoretically capable to handle up to 65'000 transactions per second. While this number is disputed, even the more realistic value of 1700 transactions per second is well above the Ethereum blockchain capacity. Ethereum is still immature and a lot is still left to do; payment channels is one of the effort to increase the number to transactions processed per second. Originating from Bitcoin's lighting network, payment channels rely on exchanging off-chain transactions and only use the blockchain as a safeguard or to settle the past off-chain transactions. Smart contracts in Ethereum are leveraged for more exhaustive and flexible channels---compared to Bitcoin's---which can accept both Ether and tokens, allow top-ups and more.
 
