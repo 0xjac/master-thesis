@@ -1,4 +1,4 @@
-\documentclass[$if(fontsize)$$fontsize$,$endif$a4paper,twoside,onecolumn,openright,titlepage]{book}
+\documentclass[$if(fontsize)$$fontsize$,$endif$a4paper,twoside,onecolumn,openright,titlepage,usenames,dvipsnames]{book}
 
 % font settings
 \usepackage[T1]{fontenc}
@@ -324,6 +324,8 @@ $endif$
 \usepackage[nomain,acronym,xindy,toc,shortcuts]{glossaries}
 \include{glossary}
 \makeglossaries
+
+\usepackage{tikz-uml}
 
 \begin{document}
 \maketitle

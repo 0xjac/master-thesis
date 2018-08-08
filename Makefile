@@ -28,7 +28,8 @@ build: .tex clean
 debug: .tex
 
 .tex: .gen-tex
-	echo "$(OUTPUT)"
+	@echo "OUTPUT=$(OUTPUT)"
+	cp -r ./lib/* "$(BUILD)/"
 	cp "glossary.tex" "$(BUILD)/glossary.tex"
 	cp "$(BIBLIOGRAPHY).bib" "$(BUILD)/$(BIBLIOGRAPHY).bib"
 	xelatex -output-directory="$(BUILD)" "$(OUTPUT)"
@@ -37,6 +38,7 @@ debug: .tex
 	xelatex -output-directory="$(BUILD)"  "$(OUTPUT)"
 	xelatex -output-directory="$(BUILD)" "$(OUTPUT)"
 	mv "$(OUTPUT).pdf" "$(DIST_DIR)"
+	@echo "PDF generated: $(DIST_DIR)/$(OUTPUT_FILE).pdf"
 
 readme:
 	pandoc --from markdown --to gfm --template=template/readme.template.md --output=README.md metadata.yml
@@ -46,7 +48,7 @@ abstract.md: SNIPPET_FILE=abstract
 acknowledgements.md: SNIPPET_FILE=acknowledgements
 
 abstract.md acknowledgements.md:
-	echo "SNIPPET=$(SNIPPET_FILE)"
+	@echo "SNIPPET=$(SNIPPET_FILE)"
 	pandoc --pdf-engine=xelatex -o "$(BUILD)/$(SNIPPET_FILE).tex" "$(SNIPPET_FILE).md"
 
 clean:
