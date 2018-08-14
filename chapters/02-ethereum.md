@@ -43,3 +43,16 @@ In addition to those types of storage, the code may access the block header data
 
 
 ## Solidity
+
+### View Functions
+
+View functions in Solidity are defined as function which do not modify the state. As defined in the Solidity documentation \citepalias{soldoc}, modifying the state implies one of:
+
+1. Writing to state variables.
+2. Emitting events.
+3. Creating other contracts.
+4. Using `selfdestruct`.
+5. Sending Ether via calls.
+6. Calling any function not marked view or pure.
+7. Using low-level calls.
+8. Using inline assembly that contains certain opcodes.

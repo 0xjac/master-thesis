@@ -34,3 +34,4 @@ bibliography: references
 
 \defcitealias{eipssite}{EIPs}
 \defcitealias{eipxtemplate}{EIP-X}
+\defcitealias{soldoc}{Solidity documentation}
