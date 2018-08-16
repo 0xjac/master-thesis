@@ -43,19 +43,22 @@ To change the name or the generated pdf file, simply overwrite the `OUTPUT` vari
 make OUTPUT_FILE="new_file"
 ```
 
+## Fast build
+A "fast build" which only runs `pandoc` and `xelatex` once without `makeglossaries` or `bibtex` can be executed to quickly generate a PDF without references or glossary, with:
+
+``` bash
+make fast
+```
+
+> The `OUTPUT_FILE` variable can also be defined in this case.
+
 ## Template
 The template used to generate the report is available at [template/template.tex](template/template.tex).
 
 It has been adapted from the official [USI Informatics Master Thesis template](http://www.inf.usi.ch/msc-thesis-stylesheet-159301.zip). Note that this adaptation is only compatible for the master thesis and the PHD related elements of the template have been removed.
 
 ## Debug
-If the PDF generation fails, the intermediary `tex` file can be preserved for debugging with:
-
-``` bash
-make debug
-```
-
-The `tex` files and associated generated files such as `.aux` are kept in the `BUILD` directory (default: `./build`).
+The `tex` files and associated generated intermediary  files such as `.aux` are kept in the `BUILD` directory (default: `./build`) and can be inspect in case of issues when generating the PDF.
 
 ---
 $if(license.badge)$>$license.badge$$endif$

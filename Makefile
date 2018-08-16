@@ -15,17 +15,24 @@ ifndef OUTPUT_FILE
 endif
 
 ifndef DIST_DIR
-  DIST_DIR:=./
+  DIST_DIR:=.
 endif
 
 OUTPUT:=$(BUILD)/$(OUTPUT_FILE)
 
 .PHONY: build clean abstract.md acknowledgements.md
-.ONESHELL: build debug abstract.md acknowledgements.md .build-dir .gen-tex .tex
+.ONESHELL: build debug fast abstract.md acknowledgements.md .build-dir .gen-tex .tex
 
-build: .tex clean
+build: clean .tex
 
-debug: .tex
+fast: .gen-tex
+	@echo "OUTPUT=$(OUTPUT)"
+	cp -r ./lib/* "$(BUILD)/"
+	cp "glossary.tex" "$(BUILD)/glossary.tex"
+	cp "$(BIBLIOGRAPHY).bib" "$(BUILD)/$(BIBLIOGRAPHY).bib"
+	xelatex -output-directory="$(BUILD)" "$(OUTPUT)"
+	mv "$(OUTPUT).pdf" "$(DIST_DIR)/"
+	@echo "PDF generated: $(DIST_DIR)/$(OUTPUT_FILE).pdf"
 
 .tex: .gen-tex
 	@echo "OUTPUT=$(OUTPUT)"
@@ -34,10 +41,11 @@ debug: .tex
 	cp "$(BIBLIOGRAPHY).bib" "$(BUILD)/$(BIBLIOGRAPHY).bib"
 	xelatex -output-directory="$(BUILD)" "$(OUTPUT)"
 	makeglossaries -d "$(BUILD)" "$(OUTPUT_FILE)"
+	xelatex -output-directory="$(BUILD)"  "$(OUTPUT)"
 	bibtex "$(OUTPUT)"
 	xelatex -output-directory="$(BUILD)"  "$(OUTPUT)"
 	xelatex -output-directory="$(BUILD)" "$(OUTPUT)"
-	mv "$(OUTPUT).pdf" "$(DIST_DIR)"
+	mv "$(OUTPUT).pdf" "$(DIST_DIR)/"
 	@echo "PDF generated: $(DIST_DIR)/$(OUTPUT_FILE).pdf"
 
 readme:
