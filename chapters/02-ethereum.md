@@ -94,4 +94,4 @@ View functions in Solidity are defined as function which do not modify the state
 
 Every contract is allowed to have at most one unnamed function which is referred to as the "fallback function". This fallback function is called if the transaction contains no data---which contains the id of the function to call---or if the id provided in the data does not match any function of the contract.
 
-The fallback function is also limited to only 2300 gas for its exection.
+The fallback function is also limited to only 2300 gas for its execution.

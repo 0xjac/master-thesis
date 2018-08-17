@@ -8,7 +8,7 @@ The Solidity Compiler named `solc` is written in C++ but JavaScript bindings nam
 
 A lot of these wrappers add features such as partial recompilation by only recompiling contracts which have changed, setting the version of Solidity to use for the compilation and more. The `truffle` suite includes more than a simple wrapper around `solcjs` and includes migration logic for smart contracts as well as a testing framework. Ultimately, we had to use `truffle` at the time as it offered one of the only coverage tool for the test of the ERC777 reference implementation.
 
-In comparison for the ERC820 registry, Giveth's `solcpiler` is used as it provides us with a greater control over the compilation process which is important as it is important to have reproducible builds such that people can compile the source code on their own and obtain the same bytecode in order to convince themselves that the deployed bytecode matches the source file. The `solcipiler` is also a good example of the infancy of tools in the Ethereum ecosystem. During the process of obtaining reproducible builds with the exact same bytecode, we identified five issues and solved three of them through five issues and three pull requests.
+In comparison for the ERC820 registry, Giveth's `solcpiler` is used as it provides us with a greater control over the compilation process which is important as it is important to have reproducible builds such that people can compile the source code on their own and obtain the same bytecode in order to convince themselves that the deployed bytecode matches the source file. The `solcpiler` is also a good example of the infancy of tools in the Ethereum ecosystem. During the process of obtaining reproducible builds with the exact same bytecode, we identified five issues and solved three of them through five issues and three pull requests.
 
 ## Testing and Coverage
 
@@ -18,7 +18,7 @@ It was then the only framework which allowed us to quickly test and provide cove
 
 ## Documentation
 
-The Ethereum Foundation defines a syntax for documenting the code, named "natspec" \citepalias[see]{natsepc}. The `solc` compiler is then able to extract the documentation from the code and return as part of the standard output file, a \gls{json} version of the documentation together with a neatly parsed version of the function signature.
+The Ethereum Foundation defines a syntax for documenting the code, named "natspec" \citepalias[see]{natspec}. The `solc` compiler is then able to extract the documentation from the code and return as part of the standard output file, a \gls{json} version of the documentation together with a neatly parsed version of the function signature.
 
 ```{caption="The \texttt{devdoc} and \texttt{userdoc} in \gls{json} format of the ERC820 registry, extracted from the metadata of the compilation's standard output from the contract." label="lst:erc820doc" language=json}
 {
