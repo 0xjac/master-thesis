@@ -44,6 +44,38 @@ In addition to those types of storage, the code may access the block header data
 
 ## Solidity
 
+While smart contracts are deployed in \gls{evm} bytecode format, they are generally almost never written in this format but in a higher language instead. Solidity and `solc`---the Solidity compiler---currently being developed by the Ethereum Foundation is the most popular smart contract language. In their own words:
+
+> Solidity is a contract-oriented, high-level language for implementing smart contracts. It was influenced by C++, Python and JavaScript and is designed to target the Ethereum Virtual Machine (EVM).
+>
+> Solidity is statically typed, supports inheritance, libraries and complex user-defined types among other features. \flushright \citepalias{soldoc}
+
+All of the contract code written for this thesis is written in Solidity and takes advantage of many of the aspects of the language, such as inheritance and modifiers. The following is a collection of relevant features or issues associated to the Solidity language which are needed to fully understand the code related to this paper.
+
+### State Variables
+
+State variables are variables whose values are permanent stored with the contract, i.e. in state variables are located in the storage. The state variable are part of the state of the contract and transaction---which have to pay  gas---are able to modify the state of the contract by executing code which modifies those state variables.
+
+### Function Modifiers
+
+Function modifier are specific functions associated to the regular functions of a contract. The modifiers are called before the actual function and thus have the ability to change the behavior of the function. They are very popular to provide access-control to functions which use should be limited according to specific conditions.
+
+```{caption="OpenZepplin's implementation of the \texttt{onlyOwner} modifier which restrict the access to the owner of the contract." label="lst:OZOnlyOwner" language=solidity}
+/**
+   * @dev Throws if called by any account other than the owner.
+   */
+  modifier onlyOwner() {
+    require(msg.sender == owner);
+    _;
+}
+```
+
+The listing \ref{lst:OZOnlyOwner} shows the implementation of a modifier which uses `require` to revert the transaction if the condition is not met and the strange `_;` syntax which is replaced with the bytecode of the function the modifier is associated to during the call to said function.
+
+### Events
+
+Events are an interface in Solidity to interact with the \gls{evm} logging facilities. The main aspect of events to remember is that they emitted by a contract but contracts are not able to listen for events. Events are intended for \glspl{dapp} which listen to them and can trigger actions on the interface of the \gls{dapp}.
+
 ### View Functions
 
 View functions in Solidity are defined as function which do not modify the state. As defined in the Solidity documentation \citepalias{soldoc}, modifying the state implies one of:
@@ -56,3 +88,10 @@ View functions in Solidity are defined as function which do not modify the state
 6. Calling any function not marked view or pure.
 7. Using low-level calls.
 8. Using inline assembly that contains certain opcodes.
+
+
+### Fallback Function
+
+Every contract is allowed to have at most one unnamed function which is referred to as the "fallback function". This fallback function is called if the transaction contains no data---which contains the id of the function to call---or if the id provided in the data does not match any function of the contract.
+
+The fallback function is also limited to only 2300 gas for its exection.
