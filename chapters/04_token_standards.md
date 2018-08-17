@@ -158,7 +158,7 @@ At the other end of the spectrum however, this translates to a higher burden on 
 
 ### Locked Tokens
 
-One of the largest issue is the distinction all token holders must make when transferring tokens regarding the type of recipient. There are no issues if the recipient is a regular account, `transfer` just works and calling `approve` with the correct amount and let the recipient call `transferFrom`. The user experience in this case is somewhat suboptimal as it requires off-chain communication, two transactions, and the recipient has two pay the gas for the second transaction. Nonetheless the intended goal is achieved and the transfer from the spender to the recipient is achieved.
+One of the largest issue is the distinction all token holders must make when transferring tokens regarding the type of recipient. There are no issues if the recipient is a regular account, `transfer` just works and calling `approve` with the correct amount and let the recipient call `transferFrom`. The \gls{ux} in this case is somewhat suboptimal as it requires off-chain communication, two transactions, and the recipient has two pay the gas for the second transaction. Nonetheless the intended goal is achieved and the transfer from the spender to the recipient is achieved.
 
 The same cannot be said if the recipient is a contract account. When using `transfer` to send tokens to a contract. The spender initiates the transfer and only communicates with the token contract the recipient is never notified---as previously shown in figure \ref{fig:erc20transfer}. The result is that while the token balance of the receiving contract is increased, that contract may never be able to use and spend the tokens it received---this situation is commonly referred to as "locked tokens". A simple proof is the Tronix contract whose `transfer` function was discussed before. A rapid look at the token balance of the Tronix contract---deployed at itself shows a balance of 5'504'504.3514 TRX as of August 8^th^ 2018. With an exchange rate of $0.0272, this represent a value of just a little under 150,000 US dollars. By analyzing the code, one can see there are no functions which would allow the contract to spend those tokens. There are of course many more similar examples of such scenarios where people sent tokens either to the token contract or to some other contract by mistake and the amounts add up quickly
 
@@ -215,7 +215,7 @@ As specified in ERC20, the `decimals` function is:
 
 In practice this result in ERC20 compliant tokens which do not implement the `decimals` function. While this may be reasonable, there is no default value defined in the standard in this scenario. This is a serious issue because if the token contract holds a balance of 2,000,000,000,000,000,000 tokens, the actual balance displayed to the user may range anywhere from 2,000,000,000,000,000,000 all the way down to 2. Common values returned by `decimals` are 18 (equivalent to ether), 8 which is the value used in Bitcoin or 0 for indivisible tokens. Obviously this is problematic, especially when the token holds a value. There is no constraint in the ERC20 standard to enforce a constant `decimals` value. Thankfully, there is---to our knowledge---no token having a variable `decimals`.
 
-Vitalik Buterin tried to solve this impression \citep{eips724} but the issue is still ongoing today.
+Vitalik Buterin tried to solve this impression \citep{eip724} but the issue is still ongoing today.
 
 ### A Retroactive Standard
 

@@ -1,0 +1,21 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{javascript}[2017/04/13]
+
+% Defines a Listings definition for JavaScript (ECMAscript 2016).
+
+\RequirePackage{listings}
+
+\lstdefinelanguage{JavaScript}{%
+  keywords={const, let, typeof, instanceof, new, true, false, catch, function, return, null, undefined, catch, switch, var, if, in, while, for, do, else, case, break},
+  keywordstyle=\bfseries,
+  ndkeywords={class, export, throw, import, this},
+  ndkeywordstyle=\bfseries,
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\ttfamily,
+  stringstyle=\color{blue}\ttfamily,
+  morestring=[b]',
+  morestring=[b]`,
+  morestring=[b]"
+}
