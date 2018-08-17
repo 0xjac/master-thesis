@@ -30,6 +30,7 @@ repo:
  name: master-thesis
 generated_file: JacquesDafflon-masterthesis
 bibliography: references
+biblio-title: References
 ---
 
 \defcitealias{eipssite}{EIPs}
