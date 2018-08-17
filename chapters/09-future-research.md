@@ -12,7 +12,17 @@ Efforts must be spent researching how to properly provide generic operators and 
 
 ## Promotion Of The ERC777 Standard
 
-The ERC777 standard is lucky to already have wide community support and acceptance. We already see many people looking it creating their own ERC777 tokens. A simple look at the number of download of the ERC777 reference implementation via \gls{npm} which is over 230 or the over 50 stars on its Github repository. We can see interest is picking up but there is still a long way to go. Meeting the community and providing talks such as the one at EthCC in Paris, back in March 2018 are also important. We hope to have the opportunity to talk about ERC777 at future Ethereum events including the Web3 summit in Berlin, the Ethereum Magicians' Council of Prague and Devcon4 also in Prague.
+The ERC777 standard is lucky to already have wide community support and acceptance. We already see many people looking it creating their own ERC777 tokens. A simple look at the number of download of the ERC777 reference implementation via \gls{npm} which is over 230 or the over 50 stars on its Github repository. We can see interest is picking up but there is still a long way to go.
+
+\begin{figure}[ht!]
+\label{fig:ethcc}
+\centering
+\includegraphics[width=0.8\textwidth]{ethcc}
+\caption{Jordi Baylina and Jacques Dafflon presenting the ERC777 standard at EthCC in Paris (March 2018). Photo credit: HelloGold Foundation}
+\end{figure}
+
+
+Meeting the community and providing talks such as the one at EthCC in Paris, back in March 2018 are also important. We hope to have the opportunity to talk about ERC777 at future Ethereum events including the Web3 summit in Berlin, the Ethereum Magicians' Council of Prague and Devcon4 also in Prague.
 
 ## Assistance For ERC777 Token Designers
 

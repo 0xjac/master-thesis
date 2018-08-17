@@ -28,6 +28,7 @@ build: clean .tex
 fast: .gen-tex
 	@echo "OUTPUT=$(OUTPUT)"
 	cp -r ./lib/* "$(BUILD)/"
+	cp -r ./img "$(BUILD)/"
 	cp "glossary.tex" "$(BUILD)/glossary.tex"
 	cp "$(BIBLIOGRAPHY).bib" "$(BUILD)/$(BIBLIOGRAPHY).bib"
 	xelatex -output-directory="$(BUILD)" "$(OUTPUT)"
@@ -37,6 +38,7 @@ fast: .gen-tex
 .tex: .gen-tex
 	@echo "OUTPUT=$(OUTPUT)"
 	cp -r ./lib/* "$(BUILD)/"
+	cp -r ./img "$(BUILD)/"
 	cp "glossary.tex" "$(BUILD)/glossary.tex"
 	cp "$(BIBLIOGRAPHY).bib" "$(BUILD)/$(BIBLIOGRAPHY).bib"
 	xelatex -output-directory="$(BUILD)" "$(OUTPUT)"
