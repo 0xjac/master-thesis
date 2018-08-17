@@ -36,3 +36,4 @@ biblio-title: References
 \defcitealias{eipssite}{EIPs}
 \defcitealias{eipxtemplate}{EIP-X}
 \defcitealias{soldoc}{Solidity documentation}
+\defcitealias{natspec}{Ethereum Natural Specification Format}
