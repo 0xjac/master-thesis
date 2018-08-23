@@ -1,0 +1,35 @@
+\begin{figure}[!htbp]
+\centering
+\resizebox{.9\linewidth}{!}{%
+\begin{tikzpicture}[thick]
+  \begin{umlseqdiag}
+    \umlactor[scale=0.6,class=Token Holder,fill=white!0]{Alice}
+    \umlobject[no ddots,fill=white!0,x=3.2]{Token Contract}
+    \umlobject[no ddots,fill=white!0,x=9.2]{ERC820 Registry}
+    \umlobject[class=Recipient,fill=white!0,x=12.2]{Carlos}
+    \begin{umlcall}[dt=6,op={send(Carlos, 10)},return=REVERT,draw=BrickRed,fill=BrickRed!20]{Alice}{Token Contract}
+      \begin{umlfragment}[type={\shortstack[l]{tokensToSend\\ hook}},name=tokensToSend]
+        \begin{umlcall}[dt=6,op={\shortstack[l]{getInterfaceImplementer(\\\qquad Alice, ERC777TokensSender)}},draw=MidnightBlue,fill=MidnightBlue!20,return=0]{Token Contract}{ERC820 Registry}
+        \end{umlcall}
+      \end{umlfragment}
+      \begin{umlcall}[dt=1,op=\shortstack{update\\ balances},draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+      \end{umlcall}
+      \begin{umlfragment}[type={\shortstack[l]{tokensReceived\\ hook}},name=tokensReceived]
+        \begin{umlcall}[dt=7,op={\shortstack[l]{getInterfaceImplementer(\\\qquad Carlos, ERC777TokensRecipient)}},draw=MidnightBlue,fill=MidnightBlue!20,return=0]{Token Contract}{ERC820 Registry}
+        \end{umlcall}
+        \begin{umlcall}[dt=6,op={\shortstack[l]{check if Carlos is a regular account}},draw=MidnightBlue,return=no,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+        \end{umlcall}
+      \end{umlfragment}
+    \end{umlcall}
+    \umlsdnode[dt=15]{ERC820 Registry}
+    \umlsdnode[dt=56]{Carlos}
+  \end{umlseqdiag}
+  \filldraw[draw=BrickRed,fill=BrickRed!20] (0,-9) circle (.2);
+  \node at (1.2,-9) {Transaction};
+  \filldraw[draw=MidnightBlue,fill=MidnightBlue!20] (3,-9) circle (.2);
+  \node at (3.6,-9) {Call};
+\end{tikzpicture}
+}
+\caption{ERC777 \texttt{send} from a regular account Alice to a contract Carlos which does not provide the required \texttt{tokensReceived} hook, thus triggering a \texttt{revert}.}
+\label{fig:sendToContractNoHook}
+\end{figure}

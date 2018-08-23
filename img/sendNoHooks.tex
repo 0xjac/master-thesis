@@ -1,0 +1,35 @@
+\begin{figure}[!htbp]
+\centering
+\resizebox{.9\linewidth}{!}{%
+\begin{tikzpicture}[thick]
+  \begin{umlseqdiag}
+    \umlactor[scale=0.6,class=Token Holder,fill=white!0]{Alice}
+    \umlobject[no ddots,fill=white!0,x=3.2]{Token Contract}
+    \umlobject[no ddots,fill=white!0,x=9]{ERC820 Registry}
+    \umlactor[scale=0.6,class=Recipient,fill=white!0,x=11.5]{Bob}
+    \begin{umlcall}[dt=6,op={send(Bob, 10)},draw=BrickRed,fill=BrickRed!20]{Alice}{Token Contract}
+      \begin{umlfragment}[type={\shortstack[l]{tokensToSend\\ hook}},name=tokensToSend]
+        \begin{umlcall}[dt=6,op={\shortstack[l]{getInterfaceImplementer(\\\qquad Alice, ERC777TokensSender)}},draw=MidnightBlue,fill=MidnightBlue!20,fill=MidnightBlue!20,return=0]{Token Contract}{ERC820 Registry}
+        \end{umlcall}
+      \end{umlfragment}
+      \begin{umlcall}[dt=1,op=\shortstack{update\\ balances},draw=MidnightBlue,fill=MidnightBlue!20,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+      \end{umlcall}
+      \begin{umlfragment}[type={\shortstack[l]{tokensReceived\\ hook}},name=tokensReceived]
+        \begin{umlcall}[dt=7,op={\shortstack[l]{getInterfaceImplementer(\\\qquad Bob, ERC777TokensRecipient)}},draw=MidnightBlue,fill=MidnightBlue!20,fill=MidnightBlue!20,return=0]{Token Contract}{ERC820 Registry}
+        \end{umlcall}
+        \begin{umlcall}[dt=6,op={\shortstack[l]{check if Bob is a regular account}},draw=MidnightBlue,fill=MidnightBlue!20,return=yes,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+        \end{umlcall}
+      \end{umlfragment}
+    \end{umlcall}
+    \umlsdnode[dt=16]{ERC820 Registry}
+    \umlsdnode[dt=55]{Bob}
+  \end{umlseqdiag}
+  \filldraw[draw=BrickRed,fill=BrickRed!20] (0,-9) circle (.2);
+  \node at (1.2,-9) {Transaction};
+  \filldraw[draw=MidnightBlue,fill=MidnightBlue!20] (3,-9) circle (.2);
+  \node at (3.6,-9) {Call};
+\end{tikzpicture}
+}
+\caption{ERC777 \texttt{send} between two regular accounts: Alice and Bob, without hooks.}
+\label{fig:sendNoHooks}
+\end{figure}

@@ -1,0 +1,21 @@
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[thick]
+  \begin{umlseqdiag}
+    \umlactor[fill=white!0,scale=0.6,class=Spender]{Alice}
+    \umlobject[fill=white!0,no ddots]{Token Contract}
+    \umlactor[fill=white!0,scale=0.6,class=Recipient]{Bob}
+    \begin{umlcall}[dt=6,op={transfer(Bob, 10)},draw=BrickRed,fill=BrickRed!20]{Alice}{Token Contract}
+      \begin{umlcall}[op=\shortstack{update\\ balances},draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+        \end{umlcall}
+    \end{umlcall}
+    \umlsdnode[dt=16]{Bob}
+  \end{umlseqdiag}
+  \filldraw[draw=BrickRed,fill=BrickRed!20] (0,-3.2) circle (.2);
+  \node at (1.2,-3.2) {Transaction};
+  \filldraw[draw=MidnightBlue,fill=MidnightBlue!20] (3,-3.2) circle (.2);
+  \node at (3.6,-3.2) {Call};
+\end{tikzpicture}
+\caption{Standard ERC20 \texttt{transfer} between two regular accounts: Alice and Bob.}
+\label{fig:erc20transfer}
+\end{figure}

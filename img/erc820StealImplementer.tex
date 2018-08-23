@@ -1,0 +1,35 @@
+\begin{figure}[!htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[thick]
+  \begin{umlseqdiag}
+    \umlactor[scale=0.6,no ddots,fill=white!0]{Alice}
+    \umlobject[no ddots,fill=white!0,x=5]{ERC820 Registry}
+    \umlobject[class=ERC777TokensRecipient,fill=white!0,x=11]{Carlos}
+    \umlactor[scale=0.6,fill=white!0,x=14]{Eve}
+    \begin{umlcall}[dt=6,draw=BrickRed,fill=BrickRed!20,op={Contract Creation}]{Alice}{Carlos}
+    \end{umlcall}
+    \begin{umlcall}[dt=16,padding=3,draw=BrickRed,fill=BrickRed!20,return=REVERT,op={\shortstack[l]{setInterfaceImplementer(\\\qquad Eve, ERC777TokensRecipient, Carlos)}}]{Eve}{ERC820 Registry}
+      \begin{umlcallself}[draw=MidnightBlue,fill=MidnightBlue!20,op={getManager(Eve)},return=Eve]{ERC820 Registry}
+      \end{umlcallself}
+      \begin{umlcall}[dt=8,padding=3,draw=MidnightBlue,fill=MidnightBlue!20,return=0,op={\shortstack[l]{canImplementInterfaceForAddress(\\\qquad Eve, ERC777TokensRecipient)}}]{ERC820 Registry}{Carlos}
+      \end{umlcall}
+    \end{umlcall}
+    \begin{umlcall}[dt=36,draw=BrickRed,fill=BrickRed!20,op={\shortstack[l]{setInterfaceImplementer(\\\qquad Alice,\\\qquad ERC777TokensRecipient,\\\qquad Carlos\\)}}]{Alice}{ERC820 Registry}
+      \begin{umlcallself}[draw=MidnightBlue,fill=MidnightBlue!20,op={getManager(Alice)},return=Alice]{ERC820 Registry}
+      \end{umlcallself}
+      \begin{umlcall}[dt=8,padding=3,draw=MidnightBlue,fill=MidnightBlue!20,return={ERC820\_ACCEPT\_MAGIC},op={\shortstack[l]{canImplementInterfaceForAddress(\\\qquad Alice, ERC777TokensRecipient)}}]{ERC820 Registry}{Carlos}
+      \end{umlcall}
+    \end{umlcall}
+    \umlsdnode[dt=2]{Carlos}
+    \umlsdnode[dt=28]{Eve}
+  \end{umlseqdiag}
+  \filldraw[draw=BrickRed,fill=BrickRed!20] (0,-11) circle (.2);
+  \node at (1.2,-11) {Transaction};
+  \filldraw[draw=MidnightBlue,fill=MidnightBlue!20] (3,-11) circle (.2);
+  \node at (3.6,-11) {Call};
+\end{tikzpicture}
+}
+\caption{Example of a regular address, Alice, deploying her implementation of \texttt{ERC777TokensRecipient}, Carlos, and the failed attempt by an attacker Eve to use Alice's implementation.}
+\label{fig:erc820StealImplementer}
+\end{figure}

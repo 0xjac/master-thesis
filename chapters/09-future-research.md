@@ -14,7 +14,7 @@ Efforts must be spent researching how to properly provide generic operators and 
 
 The ERC777 standard is lucky to already have wide community support and acceptance. We already see many people looking it creating their own ERC777 tokens. A simple look at the number of download of the ERC777 reference implementation via \gls{npm} which is over 230 or the over 50 stars on its Github repository. We can see interest is picking up but there is still a long way to go.
 
-\begin{figure}[ht!]
+\begin{figure}[!htbp]
 \label{fig:ethcc}
 \centering
 \includegraphics[width=0.8\textwidth]{ethcc}

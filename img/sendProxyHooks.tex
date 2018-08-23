@@ -1,0 +1,41 @@
+\begin{figure}[!htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[thick]
+  \begin{umlseqdiag}
+    \umlactor[scale=0.6,class=Token Holder,fill=white!0]{Alice}
+    \umlobject[no ddots,fill=white!0,x=3.2]{Token Contract}
+    \umlobject[no ddots,fill=white!0,x=9.2]{ERC820 Registry}
+    \umlobject[class=TokensSender,fill=white!0,x=11,y=-.7]{Carole}
+    \umlobject[class=ERC777TokensRecipient,fill=white!0,x=13.2]{Carlos}
+    \umlactor[scale=0.6,class=Recipient,fill=white!0,x=14.3,y=-1.6]{Bob}
+    \begin{umlcall}[dt=6,op={send(Bob, 10)},draw=BrickRed,fill=BrickRed!20]{Alice}{Token Contract}
+      \begin{umlfragment}[type={\shortstack[l]{tokensToSend\\ hook}},name=tokensToSend]
+        \begin{umlcall}[dt=6,op={\shortstack[l]{getInterfaceImplementer(\\\qquad Alice, ERC777TokensSender)}},draw=MidnightBlue,fill=MidnightBlue!20,return=Carole]{Token Contract}{ERC820 Registry}
+        \end{umlcall}
+        \begin{umlcall}[dt=6,op={\shortstack[l]{tokensToSend(Alice, Alice, Bob, 10)}},draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Carole}
+        \end{umlcall}
+      \end{umlfragment}
+      \begin{umlcall}[dt=1,op=\shortstack{update\\ balances},draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+      \end{umlcall}
+      \begin{umlfragment}[type={\shortstack[l]{tokensReceived\\ hook}},name=tokensReceived]
+        \begin{umlcall}[dt=7,op={\shortstack[l]{getInterfaceImplementer(\\\qquad Bob, ERC777TokensRecipient)}},draw=MidnightBlue,fill=MidnightBlue!20,return=Carlos]{Token Contract}{ERC820 Registry}
+        \end{umlcall}
+        \begin{umlcall}[dt=6,op={\shortstack[l]{tokensReceived(Alice, Alice, Bob, 10)}},draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Carlos}
+        \end{umlcall}
+      \end{umlfragment}
+    \end{umlcall}
+    \umlsdnode[dt=14]{ERC820 Registry}
+    \umlsdnode[dt=6]{Carlos}
+    \umlsdnode[dt=36]{Carole}
+    \umlsdnode[dt=51]{Bob}
+  \end{umlseqdiag}
+  \filldraw[draw=BrickRed,fill=BrickRed!20] (0,-10) circle (.2);
+  \node at (1.2,-10) {Transaction};
+  \filldraw[draw=MidnightBlue,fill=MidnightBlue!20] (3,-10) circle (.2);
+  \node at (3.6,-10) {Call};
+\end{tikzpicture}
+}
+\caption{ERC777 \texttt{send} between two regular accounts Alice and Bob, where Alice has set the contract Carole as her \texttt{tokensToSend} hook and Bob has set the contract Carlos as his \texttt{tokensReceived} hook.}
+\label{fig:sendProxyHooks}
+\end{figure}

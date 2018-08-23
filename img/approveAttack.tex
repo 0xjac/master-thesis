@@ -1,0 +1,47 @@
+\begin{figure}[!htbp]
+\centering
+\resizebox{.8\linewidth}{!}{%
+\begin{tikzpicture}[thick]
+  \begin{umlseqdiag}
+    \umlactor[scale=0.6,class=Victim,fill=white!0]{Alice}
+    \umlobject[no ddots,fill=white!0]{Token Contract}
+    \umlactor[scale=0.6,class=Attacker,x=9,fill=white!0]{Eve}
+    \begin{umlcall}[op={approve(Eve, N)},draw=BrickRed,fill=BrickRed!20,dt=6]{Alice}{Token Contract}
+      \begin{umlcall}[op=set allowance to N,draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+      \end{umlcall}
+    \end{umlcall}
+    \begin{umlfragment}[type={Race Condition},name=racecond,label=successful front-run]
+      \begin{umlcall}[op={transferFrom(Alice, Eve, N)},draw=BrickRed,fill=BrickRed!20,dt=24]{Eve}{Token Contract}
+        \begin{umlcall}[op=update balances,draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+        \end{umlcall}
+        \begin{umlcall}[op=decrease allowance to 0,draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+        \end{umlcall}
+      \end{umlcall}
+      \begin{umlcall}[op={approve(Eve, M)},draw=BrickRed,fill=BrickRed!20,dt=30]{Alice}{Token Contract}
+        \begin{umlcall}[op=set allowance,draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+        \end{umlcall}
+      \end{umlcall}
+      \begin{umlcall}[op={transferFrom(Alice, Eve, M)},draw=BrickRed,fill=BrickRed!20,dt=18]{Eve}{Token Contract}
+        \begin{umlcall}[op=decrease allowance to 0,draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+        \end{umlcall}
+      \end{umlcall}
+      \umlfpart[failed front-run]
+      \begin{umlcall}[op={approve(Eve, M)},draw=BrickRed,fill=BrickRed!20,dt=18]{Alice}{Token Contract}
+        \begin{umlcall}[op=set allowance to M,draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+        \end{umlcall}
+      \end{umlcall}
+      \begin{umlcall}[return=REVERT,op={transferFrom(Alice, Eve, N)},draw=BrickRed,fill=BrickRed!20,dt=22]{Eve}{Token Contract}
+      \end{umlcall}
+    \end{umlfragment}
+    \umlsdnode[dt=8]{Alice}
+    \umlnote[x=0,y=-15,width=6cm,fill=solarizedbeige]{racecond}{Eve sees Alice's approve transaction and tries to front-run her with a transferFrom transaction with a higher gas price.}
+  \end{umlseqdiag}
+  \filldraw[draw=BrickRed,fill=BrickRed!20] (0,-16.5) circle (.2);
+  \node at (1.2,-16.5) {Transaction};
+  \filldraw[draw=MidnightBlue,fill=MidnightBlue!20] (3,-16.5) circle (.2);
+  \node at (3.6,-16.5) {Call};
+\end{tikzpicture}
+}
+\caption{Sequence of calls for the \texttt{approve}/\texttt{transferFrom} attack.}
+\label{fig:erc20approveattack}
+\end{figure}

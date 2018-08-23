@@ -18,25 +18,11 @@ The `balanceOf` function takes an address as parameter and returns the number of
 
 The `transfer` and `transferFrom` functions are used to move tokens across addresses. The `transfer` function takes two parameters, first the address of the recipient and secondly the number of tokens to transfer. When executed, the balance of the address which called the function is debited and the balance of the address specified as the first parameter is credited the number of token specified as the second parameter. Of course, before updating any balance some checks are performed to ensure the debtor has enough funds.
 
-\begin{figure}[ht!]
-\centering
-\begin{tikzpicture}
-  \begin{umlseqdiag}
-    \umlactor[class=Spender]{Alice}
-    \umlobject[no ddots]{Token Contract}
-    \umlactor[class=Recipient]{Bob}
-    \begin{umlcall}[op={transfer(Bob, 10)},draw=BrickRed]{Alice}{Token Contract}
-      \begin{umlcall}[op=\shortstack{update\\ balances},draw=MidnightBlue]{Token Contract}{Token Contract}
-        \end{umlcall}
-    \end{umlcall}
-    \umlsdnode[dt=14]{Bob}
-  \end{umlseqdiag}
-\end{tikzpicture}
-\caption{Standad ERC20 \texttt{transfer} between two regular accounts: Alice and Bob.}
-\label{fig:erc20transfer}
-\end{figure}
+\input{img/transfer.tex}
 
 As seen on figure \ref{fig:erc20transfer} when performing a transfer, the spender emits a transaction which calls the token contract and update the balances accordingly. The recipient is never involved in the transaction. The logic to update the balance is entirely done within the token contract, in the `transfer` function.
+
+> TODO Explain colors in graphs
 
 Examples of the implementation details to update the balances are shown in listings \ref{lst:OZTransfer} and \ref{lst:TronixTransfer}.
 
@@ -91,32 +77,7 @@ function transfer(address _to, uint256 _value)
 
 The `transferFrom` function is the second function available to transfer tokens between addresses. It's use is depicted in figure \ref{fig:erc20transferFrom}. It takes three parameters the debtor address, the creditor address and the number of tokens to transfer.
 
-\begin{figure}[ht!]
-\centering
-\begin{tikzpicture}
-  \begin{umlseqdiag}
-    \umlactor[class=Spender]{Alice}
-    \umlobject[no ddots]{Token Contract}
-    \umlactor[class=Recipient,x=9]{Carlos}
-    \begin{umlfragment}[type=Approval]
-      \begin{umlcall}[op={approve(Carlos, 10)},draw=BrickRed,dt=8]{Alice}{Token Contract}
-        \begin{umlcall}[op=\shortstack{update\\ allowance},draw=MidnightBlue]{Token Contract}{Token Contract}
-        \end{umlcall}
-      \end{umlcall}
-    \end{umlfragment}
-    \begin{umlfragment}[type={Transfer}]
-      \begin{umlcall}[op={notify of approve},draw=OliveGreen,dt=8]{Alice}{Carlos}
-        \begin{umlcall}[op={transferFrom(Alice, Carlos, 10)},draw=BrickRed,dt=4]{Carlos}{Token Contract}
-          \begin{umlcall}[op=\shortstack{react to\\ transfer},draw=MidnightBlue]{Carlos}{Carlos}
-          \end{umlcall}
-        \end{umlcall}
-      \end{umlcall}
-    \end{umlfragment}
-  \end{umlseqdiag}
-\end{tikzpicture}
-\caption{Standad ERC20 \texttt{transferFrom} between a regular account Alice and a contract account Carlos.}
-\label{fig:erc20transferFrom}
-\end{figure}
+\input{img/transferFrom.tex}
 
 The reason for the existence of this second function to transfer tokens is contracts. Contracts usually need to react when receiving tokens. When a normal `transfer` is called to send tokens to a contract, the receiving contract is never called and cannot react. Contracts are also not able to listen to events, making it impossible for a contract to react to a `Transfer` event. The `transferFrom` lets the token contract transfer the tokens from someone else to itself or others. At first glance this appears to be insecure as it lets anyone withdraw tokens from any address. This is where the `approve` and `allowance` functions come into play. The specification for the `transferFrom` function state that "[t]he function SHOULD `throw` unless the `_from` account has deliberately authorized the sender of the message via some mechanism" \citep{erc20}. The `approve` function the standard mechanism to authorize a sender to call `transferFrom`. Consider an ERC20 token, a regular user Alice and a contract Carlos. Alice wishes to send five tokens to Carlos to purchase a service offered by Carlos. If she uses the `transfer` function, the contract will never be made aware of the five tokens it received and will not activate the service for Alice. Instead, Alice can call `approve` to allow Carlos to transfer five of Alice's tokens. Anyone can then call `allowance` to check that Alice did in fact allow Carlos to transfer the five tokens from Alice's balance. Alice can then call a public function of Carlos or notify off-chain the maintainers of the Carlos contract such that they can call the function. This function of Carlos can call the `transferFrom` function of the token contract to receive the five tokens from Alice.
 
@@ -174,30 +135,9 @@ By abusing the \gls{abi} of ERC20, an attacker can trick its victim into approvi
 
 So, Alice's attempt to change Bob's allowance from $N$ to $M$ ($N>0$ and $M>0$) made it possible for Bob to transfer $N+M$ of Alice's tokens, while Alice never wanted to allow so many of her tokens to be transferred by Bob.
 
-\begin{figure}[ht!]
-\centering
-\begin{tikzpicture}
-  \begin{umlseqdiag}
-    \umlactor[class=Victim]{Alice}
-    \umlobject[no ddots]{Token Contract}
-    \umlactor[class=Attacker,x=9]{Bob}
-    \begin{umlcall}[op={approve(Bob, N)},draw=BrickRed,dt=6]{Alice}{Token Contract}
-    \end{umlcall}
-    \begin{umlfragment}[type={Race Condition},name=racecond]
-      \begin{umlcall}[op={transferFrom(Alice, Bob, N)},draw=BrickRed,dt=16.4]{Bob}{Token Contract}
-      \end{umlcall}
-      \begin{umlcall}[op={approve(Bob, M)},draw=BrickRed,dt=8]{Alice}{Token Contract}
-      \end{umlcall}
-    \end{umlfragment}
-    \begin{umlcall}[op={transferFrom(Alice, Bob, M)},draw=BrickRed,dt=6]{Bob}{Token Contract}
-    \end{umlcall}
-    \umlsdnode[dt=8]{Alice}
-    \umlnote[x=2,y=-6]{racecond}{Bob sees Alice's approve transaction and tries to front-run her with a transferFrom transaction with a higher gas price.}
-  \end{umlseqdiag}
-\end{tikzpicture}
-\caption{Sequence of calls for the \texttt{approve}/\texttt{transferFrom} attack.}
-\label{fig:erc20approveattack}
-\end{figure}
+\input{img/approveAttack.tex}
+
+> TODO explain revert
 
 ### Absence Of burning
 

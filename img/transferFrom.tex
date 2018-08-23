@@ -1,0 +1,41 @@
+\begin{figure}[!htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[thick]
+  \begin{umlseqdiag}
+    \umlactor[scale=0.6,class=Spender, fill=yellow!0]{Alice}
+    \umlobject[no ddots, x=3.5, fill=yellow!0]{Token Contract}
+    \umlobject[class=Recipient, fill=yellow!0, x=7]{Carlos}
+    \umlactor[scale=0.6,class= Carlos' Owner, fill=yellow!0, x=10]{Bob}
+    \begin{umlfragment}[type=Approval]
+      \begin{umlcall}[op={approve(Carlos, 10)},draw=BrickRed,fill=BrickRed!20,dt=8]{Alice}{Token Contract}
+        \begin{umlcall}[op=set allowance,draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+        \end{umlcall}
+      \end{umlcall}
+    \end{umlfragment}
+    \begin{umlfragment}[type={Transfer}]
+      \begin{umlcall}[op={notify of approve},draw=OliveGreen,fill=OliveGreen!20,dt=8]{Alice}{Bob}
+        \begin{umlcall}[op={custom function},draw=BrickRed,fill=BrickRed!20,dt=12]{Bob}{Carlos}
+          \begin{umlcall}[op={\shortstack[l]{transferFrom(\\\qquad Alice,\\\qquad Carlos,\\\qquad 10\\)}},draw=MidnightBlue,fill=MidnightBlue!20,dt=4]{Carlos}{Token Contract}
+          \end{umlcall}
+          \begin{umlcall}[op={\shortstack[l]{react to\\ transfer}},draw=MidnightBlue,fill=MidnightBlue!20]{Carlos}{Carlos}
+          \end{umlcall}
+        \end{umlcall}
+      \end{umlcall}
+    \end{umlfragment}
+    \umlsdnode[dt=1]{Alice}
+    \umlsdnode[dt=13]{Token Contract}
+    \umlsdnode[dt=3]{Carlos}
+    \umlsdnode[dt=1]{Bob}
+  \end{umlseqdiag}
+  \filldraw[draw=BrickRed,fill=BrickRed!20] (0,-9.5) circle (.2);
+  \node at (1.2,-9.5) {Transaction};
+  \filldraw[draw=MidnightBlue,fill=MidnightBlue!20] (3,-9.5) circle (.2);
+  \node at (3.6,-9.5) {Call};
+  \filldraw[draw=OliveGreen,fill=OliveGreen!20] (5,-9.5) circle (.2);
+  \node at (6,-9.5) {Off-chain};
+\end{tikzpicture}
+}
+\caption{Standad ERC20 \texttt{transferFrom} between a regular account Alice and a contract account Carlos.}
+\label{fig:erc20transferFrom}
+\end{figure}

@@ -1,0 +1,35 @@
+\begin{figure}[!htbp]
+\centering
+\resizebox{.9\linewidth}{!}{%
+\begin{tikzpicture}[thick]
+  \begin{umlseqdiag}
+    \umlactor[scale=0.6,no ddots,fill=white!0]{Alice}
+    \umlobject[no ddots,fill=white!0,x=5]{ERC820 Registry}
+    \umlobject[class=ERC777TokensRecipient,fill=white!0,x=11]{Carlos}
+    \begin{umlcall}[dt=6,draw=BrickRed,fill=BrickRed!20,op={Contract Creation}]{Alice}{Carlos}
+      \begin{umlcall}[dt=4,draw=MidnightBlue,fill=MidnightBlue!20,op={setManager(Carlos, Alice)}]{Carlos}{ERC820 Registry}
+        \begin{umlcallself}[draw=MidnightBlue,fill=MidnightBlue!40,op={getManager(Carlos)},return=Carlos]{ERC820 Registry}
+        \end{umlcallself}
+      \end{umlcall}
+    \end{umlcall}
+    \begin{umlcall}[dt=8,name=set,draw=BrickRed,fill=BrickRed!20,op={\shortstack[l]{setInterfaceImplementer(\\\qquad Carlos,\\\qquad ERC777TokensRecipient,\\\qquad Carlos\\)}}]{Alice}{ERC820 Registry}
+      \begin{umlcallself}[draw=MidnightBlue,fill=MidnightBlue!20,op={getManager(Carlos)},return=Alice]{ERC820 Registry}
+      \end{umlcallself}
+    \end{umlcall}
+    \begin{umlcall}[dt=8,name=set,draw=BrickRed,fill=BrickRed!20,op={\shortstack[l]{setInterfaceImplementer(\\\qquad Alice,\\\qquad ERC777TokensRecipient,\\\qquad Carlos\\)}}]{Alice}{ERC820 Registry}
+      \begin{umlcallself}[draw=MidnightBlue,fill=MidnightBlue!20,op={getManager(Alice)},return=Alice]{ERC820 Registry}
+      \end{umlcallself}
+      \begin{umlcall}[dt=8,padding=3,draw=MidnightBlue,fill=MidnightBlue!20,return={ERC820\_ACCEPT\_MAGIC},op={\shortstack[l]{canImplementInterfaceForAddress(\\\qquad Alice, ERC777TokensRecipient)}}]{ERC820 Registry}{Carlos}
+      \end{umlcall}
+    \end{umlcall}
+    \umlsdnode[dt=2]{Carlos}
+  \end{umlseqdiag}
+  \filldraw[draw=BrickRed,fill=BrickRed!20] (0,-11.5) circle (.2);
+  \node at (1.2,-11.5) {Transaction};
+  \filldraw[draw=MidnightBlue,fill=MidnightBlue!20] (3,-11.5) circle (.2);
+  \node at (3.6,-11.5) {Call};
+\end{tikzpicture}
+}
+\caption{Example of a regular account, Alice, first deplying a contract Carlos which sets Alice as its manager. Secondly, Alice set Carlos both as its own implementation of \texttt{ERC777TokensRecipient} and as hers.}
+\label{fig:erc820DelegateRegister}
+\end{figure}
