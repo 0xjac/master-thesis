@@ -1,1 +1,3 @@
-ACKS
+## Jordi Baylina
+
+Jordi Baylina is a member of the White Hat Group and Giveth and one of the authors of the ERC777 standard. Being a well known and well appreciated figure in the Ethereum community, made it easier to promote ERC777 and convince people of the quality and seriousness of the standard. Thanks to his many years of experience in Ethereum both as an end-user and as developer, he is able to provide valuable input on the design of the standard both from a security and a usability point of view. He is also a great source of knowledge regarding some of the quirks of Ethereum and Solidity which was essential to help me gain personally a deeper understanding of the Ethereum ecosystem.

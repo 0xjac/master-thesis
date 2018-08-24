@@ -139,7 +139,7 @@ So, Alice's attempt to change Bob's allowance from $N$ to $M$ ($N>0$ and $M>0$) 
 
 The figure \ref{fig:approveAttack} showcase both cases of the race condition where the attack either succeeds or fails to front-run its victim. Note that in this scenario, $M < N$ which is why when the front-run fails the `transferFrom` call of Eve for $N$ tokens fails. In the case where $M > N$, the first `transferFrom` call for $N$ would succeed and the allowance would be decreased to $M - N$ and the second `transferFrom` call of Eve for $M$ would fail. In this situation, Eve does manage to transfer some tokens but the attack has still fails as she manages to transfer only $N$ tokens---not $N + M$ tokens which is outside her "intended approval".
 
-### Absence Of burning
+### Absence Of Burning
 
 The ERC20 standard defines the behavior for minting new tokens. Namely, "[a] token contract which creates new tokens SHOULD trigger a Transfer event with the `_from` address set to `0x0` when tokens are created" \citep{erc20}. Unfortunately the standard does not go further, nothing is specified regarding the balance of `0x0` or the `totalSupply` for example.
 
@@ -155,7 +155,7 @@ As specified in ERC20, the `decimals` function is:
 
 In practice this result in ERC20 compliant tokens which do not implement the `decimals` function. While this may be reasonable, there is no default value defined in the standard in this scenario. This is a serious issue because if the token contract holds a balance of 2,000,000,000,000,000,000 tokens, the actual balance displayed to the user may range anywhere from 2,000,000,000,000,000,000 all the way down to 2. Common values returned by `decimals` are 18 (equivalent to ether), 8 which is the value used in Bitcoin or 0 for indivisible tokens. Obviously this is problematic, especially when the token holds a value. There is no constraint in the ERC20 standard to enforce a constant `decimals` value. Thankfully, there is---to our knowledge---no token having a variable `decimals`.
 
-Vitalik Buterin tried to solve this impression \citep{eip724} but the issue is still ongoing today.
+Vitalik Buterin tried to solve this imprecision \citep{eip724} but the issue is still ongoing today.
 
 ### A Retroactive Standard
 
