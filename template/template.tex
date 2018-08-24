@@ -4,6 +4,18 @@
 \usepackage[T1]{fontenc}
 \usepackage[charter]{mathdesign}
 \usepackage[scaled]{beramono}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\newfontfamily\cyrillicfont{libertinusserif-regular.otf}[Script=Cyrillic]
+\newfontfamily\cyrillicfontsf{libertinussans-regular.otf}[Script=Cyrillic]
+
+\setdefaultlanguage{english}
+\setotherlanguage{russian}
+
+\usepackage{xeCJK} % for chinese characters
+
 % \renewcommand{\sfdefault}{uop}
 % \renewcommand{\scshape}{%
 %   \not@math@alphabet\scshape\relax
@@ -257,7 +269,6 @@ $endif$
 
 % misc
 \renewcommand{\baselinestretch}{1.05}
-\usepackage{lipsum}
 \usepackage{listings}
 \newcommand{\passthrough}[1]{#1}
 % \lstset{basicstyle=\ttfamily,breaklines=true}
@@ -332,9 +343,6 @@ morecomment=[l]{//s},
 	captionpos=b
 }
 
-\usepackage{xeCJK} % for chinese characters
-\fontspec[Path=./fonts/]{NotoSansCJK-Regular.ttc}
-
 % \usepackage{booktabs}
 \usepackage{graphicx}
 \graphicspath{ {./img/} }
@@ -353,9 +361,9 @@ $endif$
 % Style for links
 \newcommand{\link}[2]{\underline{\href{#1}{#2}}}
 
-\usepackage[nomain,acronym,xindy,toc,shortcuts]{glossaries}
-\include{glossary}
+\usepackage[nomain,acronym,xindy={glsnumbers=false},toc,shortcuts]{glossaries}
 \makeglossaries
+\include{glossary}
 
 \usepackage{tikz-uml}
 \usepackage{javascript}
