@@ -8,13 +8,21 @@
 \usepackage{fontspec}
 \usepackage{polyglossia}
 
-\newfontfamily\cyrillicfont{libertinusserif-regular.otf}[Script=Cyrillic]
-\newfontfamily\cyrillicfontsf{libertinussans-regular.otf}[Script=Cyrillic]
+% \newfontfamily\cyrillicfont[Script = Cyrillic]{LinLibertine}
+\newfontfamily\cyrillicfont[  BoldFont        = LinLibertine_RB.otf,
+                              ItalicFont      = LinLibertine_RI.otf,
+                              BoldItalicFont  = LinLibertine_RBI.otf,
+                              Mapping         = tex-text]{LinLibertine_R.otf}
+% \newfontfamily\cyrillicfontsf[Script = Cyrillic]{LinBiolinum_R}
+\newfontfamily\cyrillicfontsf[  BoldFont        = LinBiolinum_RB.otf,
+                                ItalicFont      = LinBiolinum_RI.otf,
+                              Mapping         = tex-text]{LinBiolinum_R.otf}
 
 \setdefaultlanguage{english}
 \setotherlanguage{russian}
 
 \usepackage{xeCJK} % for chinese characters
+% \fontspec[Path=./fonts/]{NotoSansCJK-Regular.ttc}
 
 % \renewcommand{\sfdefault}{uop}
 % \renewcommand{\scshape}{%
