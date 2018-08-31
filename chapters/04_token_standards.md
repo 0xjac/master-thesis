@@ -137,7 +137,7 @@ So, Alice's attempt to change Bob's allowance from $N$ to $M$ ($N>0$ and $M>0$) 
 
 \input{fig/approveAttack.tex}
 
-The figure \ref{fig:approveAttack} showcase both cases of the race condition where the attack either succeeds or fails to front-run its victim. Note that in this scenario, $M < N$ which is why when the front-run fails the `transferFrom` call of Eve for $N$ tokens fails. In the case where $M > N$, the first `transferFrom` call for $N$ would succeed and the allowance would be decreased to $M - N$ and the second `transferFrom` call of Eve for $M$ would fail. In this situation, Eve does manage to transfer some tokens but the attack has still fails as she manages to transfer only $N$ tokens---not $N + M$ tokens which is outside her "intended approval".
+The figure \ref{fig:erc20approveattack} showcases both cases of the race condition where the attack either succeeds or fails to front-run its victim. Note that in this scenario, $M < N$ which is why when the front-run fails the `transferFrom` call of Eve for $N$ tokens fails. In the case where $M > N$, the first `transferFrom` call for $N$ would succeed and the allowance would be decreased to $M - N$ and the second `transferFrom` call of Eve for $M$ would fail. In this situation, Eve does manage to transfer some tokens but the attack has still fails as she manages to transfer only $N$ tokens---not $N + M$ tokens which is outside her "intended approval".
 
 ### Absence Of Burning
 
