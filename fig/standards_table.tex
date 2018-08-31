@@ -1,0 +1,31 @@
+\begin{table}
+  \renewcommand{\arraystretch}{1.5}
+  \centering
+  \resizebox{\linewidth}{!}{%
+  \begin{tabular}{r p{3.5cm} >{\centering}p{2cm} c p{6cm}}
+\hline
+EIP  & Title & Type & Status & Description \\
+\hline
+  20 & ERC: Token standard & New Token Standard & accepted & Only accepted standard, variable decimals, transfer and approvals\\
+ 179 & ERC: Simpler Token Standard & New Token Standard & draft & Removes approvals (\texttt{approve}/\texttt{transferFrom})\\
+ 223 & ERC223 token standard & New Token Standard & draft & New \texttt{tokenFallback} function called on recipient contracts \\
+ 621 & Token Standard Extension for Increasing \& Decreasing Supply & ERC20 extension & draft & Minting and burning mechanisms\\
+ 644 & ERC 644: Token Standard for Modular and Upgradeable Tokens & ERC20 extension & draft & Split balances data and business logic in separate contracts\\
+ 661 & Provable Burn: ERC20 Extension & ERC20 extension & draft & Burning using signed messages.\\
+ 671 & Add token standard allowing derivative contracts & ERC20 extension & withdrawn & Lock token allowances for the approved spenders \\
+ 677 & ERC: transferAndCall Token Standard & ERC20 extension & draft & New \texttt{transferAndCall} function to call a \texttt{tokenFallback} function on the recipient. \\
+ 717 & Unlimited ERC20 token allowance & ERC20 extension & draft & Explicit unlimited allowance amount for approvals \\
+ 724 & Proposed ERC20 change: make 18 decimal places compulsory & ERC20 extension & draft & Fix the \texttt{decimals} to $18$ \\
+ 732 & Reduce mandatority of Transfer events for void transfers & ERC20 extension & draft & Do not enforce emitting \texttt{Transfer} events for 0 tokens transfers and transfers to self.\\
+ 777 & A New Advanced Token Standard & New Token Standard & draft & Fixed decimals, granularity, hooks, operators, minting and burning, and single sending mechanism for regular accounts and contracts. \\
+ 827 & ERC827 Token Standard (ERC20 Extension) & ERC20 extension & draft & New functions to call hooks on the spender or recipient when approving or transferring tokens, respectively. \\
+ 995 & ERC995 Token Standard & ERC827 extension & draft & Similar to ERC827 but with overloading of the \texttt{approve}, \texttt{transfer} and \texttt{transferFrom} functions instead of defining new functions \\
+1003 & ERC1003 Token Standard (ERC20 Extension) & ERC20 extension & draft & Provide an intermediary contract to transfer tokens to a contract. \\
+1111 & Introspective metadata definition disclosure (discussion to establish a standard) & ERC777 extension & draft & Format specification for the \texttt{bytes} data attributes.\\
+1132 & Extending ERC20 with token locking capability & ERC20 extension & draft & Time-locking of tokens \\
+\hline
+  \end{tabular}
+  }
+  \caption{EIPs proposing new token standards or extension of existing token standards}
+  \label{tbl:standards}
+\end{table}

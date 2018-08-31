@@ -1,0 +1,122 @@
+digraph G {
+  rankdir=TB;
+  node [fontname="helvetica", fontsize=40 ];
+  subgraph timeline {
+    node [ shape=plaintext ];
+    "Nov. 2015" ->
+    "..." ->
+    "Nov. 2016" ->
+    "Dec. 2016" ->
+    "Jan. 2017" ->
+    "Feb. 2017" ->
+    "Mar. 2017" ->
+    "Apr. 2017" ->
+    "May 2017" ->
+    "Jun. 2017" ->
+    "Jul. 2017" ->
+    "Aug. 2017" ->
+    "Sep. 2017" ->
+    "Oct. 2017" ->
+    "Nov. 2017" ->
+    "Dec. 2017" ->
+    "Jan. 2018" ->
+    "Feb. 2018" ->
+    "Mar. 2018" ->
+    "Apr. 2018" ->
+    "May 2018" ->
+    "Jun. 2018"
+  }
+
+  subgraph tree {
+  node [ style="filled,bold,rounded", shape=diamond, fillcolor="#badbe9", color="#006895", margin="0.1" ];
+  ERC20 [ label="ERC20", URL="https://eips.ethereum.org/EIPS/eip-20", shape=circle, fillcolor="#d0e1cc", color="#3f7d31" ];
+  ERC179 [ label="ERC179", URL="https://github.com/ethereum/EIPs/issues/179", style="filled,bold,rounded,dashed", shape=box];
+  ERC223 [ label="ERC223", URL="https://github.com/ethereum/EIPs/issues/223", style="filled,bold,rounded,dashed", shape=box];
+  ERC621 [ label="ERC621", URL="https://github.com/ethereum/EIPs/pull/621", style="filled,bold,rounded,dashed" ];
+  ERC644 [ label="ERC644", URL="https://github.com/ethereum/EIPs/issues/661", style="filled,bold,rounded,dashed", shape=box ];
+  ERC661 [ label="ERC661", URL="https://github.com/ethereum/EIPs/issues/661", style="filled,bold,rounded,dashed" ];
+  ERC671 [ label="ERC671", URL="https://github.com/ethereum/EIPs/pull/671", style="filled,bold,rounded,dashed", fillcolor="#f6cfc0", color="#c43119" ];
+  ERC677 [ label="ERC677", URL="https://github.com/ethereum/EIPs/issues/677", style="filled,bold,rounded,dashed" ];
+  ERC717 [ label="ERC717", URL="https://github.com/ethereum/EIPs/issues/717", style="filled,bold,rounded,dashed" ];
+  ERC724 [ label="ERC724", URL="https://github.com/ethereum/EIPs/issues/724", style="filled,bold,rounded,dashed" ];
+  ERC732 [ label="ERC732", URL="https://github.com/ethereum/EIPs/pull/732", style="filled,bold,rounded,dashed" ];
+  ERC777 [ label="ERC777", URL="https://eips.ethereum.org/EIPS/eip-777", shape=box];
+  ERC827 [ label="ERC827", URL="https://github.com/ethereum/EIPs/issues/827", style="filled,bold,rounded,dashed", shape=box ];
+  ERC995 [ label="ERC995", URL="https://github.com/ethereum/EIPs/issues/995", style="filled,bold,rounded,dashed" ];
+  ERC1003 [ label="ERC1003", URL="https://github.com/ethereum/EIPs/issues/1003", style="filled,bold,rounded,dashed" ];
+  ERC1111 [ label="ERC1111", URL="https://github.com/ethereum/EIPs/issues/1111", style="filled,bold,rounded,dashed" ];
+  ERC1132 [ label="ERC1132", URL="https://eips.ethereum.org/EIPS/eip-1132" ];
+
+  { rank = same ; "Nov. 2015" ; ERC20 }
+  { rank = same ; "Nov. 2016" ; ERC179 }
+  { rank = same ; "Mar. 2017" ; ERC223 }
+  { rank = same ; "May 2017" ; ERC621 }
+  { rank = same ; "Jun. 2017" ; ERC644 }
+  { rank = same ; "Jul. 2017" ; ERC661 ; ERC671 ; ERC677 }
+  { rank = same ; "Sep. 2017" ; ERC717 ; ERC724 }
+  { rank = same ; "Oct. 2017" ; ERC732 }
+  { rank = same ; "Nov. 2017" ; ERC777 }
+  { rank = same ; "Jan. 2018" ; ERC827 }
+  { rank = same ; "Apr. 2018" ; ERC995 ; ERC1003 }
+  { rank = same ; "May 2018" ; ERC1111 }
+  { rank = same ; "Jun. 2018" ; ERC1132 }
+
+
+  ERC20 -> ERC179;
+  ERC20 -> ERC223;
+  ERC20 -> ERC621;
+  ERC20 -> ERC644;
+  ERC20 -> ERC661;
+  ERC20 -> ERC671;
+  ERC20 -> ERC677;
+  ERC20 -> ERC717;
+  ERC20 -> ERC724;
+  ERC20 -> ERC732;
+  ERC20 -> ERC777;
+  ERC20 -> ERC827;
+  ERC20 -> ERC995;
+  ERC827 -> ERC995;
+  ERC20 -> ERC1003;
+  ERC777 -> ERC1111;
+  ERC20 -> ERC1132;
+  }
+
+  subgraph cluster_legend {
+    labelloc="t"
+    label="Legend";
+    rank=max;
+    // margin="0.01"
+
+    node [ shape=plaintext, margin="0.000001" ];
+    txt_rejected [ label="rejected/\lwithdrawn" ];
+    txt_draft [ label="draft" ];
+    txt_accepted [ label="accepted" ];
+    txt_unmerged [ label="no merged\ldocument" ];
+    txt_merged [label="merged\ldocument" ];
+    txt_new [ label="new\lstandard" ];
+    txt_ext [ label="standard\lextension" ];
+
+    node [ width=0.6, height=0.4, style="filled,bold,rounded", margin="0.1", color="black", fillcolor="black"];
+    rejected [ label="", shape=point, fillcolor="#f6cfc0", color="#c43119" ];
+    accepted [ label="", shape=point, fillcolor="#d0e1cc", color="#3f7d31" ];
+    draft    [ label="", shape=point, fillcolor="#badbe9", color="#006895" ];
+    unmerged [ label="", shape=circle, width=0.3, style="bold,dashed" ];
+    merged   [ label="", shape=circle, width=0.3, style="bold" ];
+    new      [ label="", shape=box ];
+    ext      [ label="", shape=diamond width=0.8 ];
+
+    edge [ style="invis" minlen="-1" ];
+    rejected -> txt_rejected;
+    draft -> txt_draft;
+    accepted -> txt_accepted;
+    unmerged -> txt_unmerged;
+    merged -> txt_merged;
+    new -> txt_new;
+    ext -> txt_ext;
+
+    { rank = same ; rejected ; draft ; accepted ; unmerged ; merged ; new ; ext }
+    { rank = same ; txt_rejected ; txt_draft ; txt_accepted ; txt_unmerged ; txt_merged ; txt_new ; txt_ext }
+  }
+
+  ERC1111 -> accepted [ style="invis" ];
+}
