@@ -34,4 +34,4 @@ Both promotion and assistance of the ERC777 standard can use a website as suppor
 
 ## Other Tools
 
-As mentioned in section \ref{the-state-of-tooling}, many tools are lacking or incomplete. Contributing further to the `solcpiler` project, creating a gas analysis tool and a documentation generating tool are all interesting future project which can help make ERC777 more accessible and easier to understand. Those tools are another opportunity to give back to the community as well and can help both us and everyone else have a better experience when building any project in the Ethereum system.
+As mentioned in section \ref{the-state-of-tooling-in-the-ethereum-ecosystem}, many tools are lacking or incomplete. Contributing further to the `solcpiler` project, creating a gas analysis tool and a documentation generating tool are all interesting future project which can help make ERC777 more accessible and easier to understand. Those tools are another opportunity to give back to the community as well and can help both us and everyone else have a better experience when building any project in the Ethereum system.

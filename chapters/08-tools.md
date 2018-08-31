@@ -1,4 +1,4 @@
-# The State Of Tooling
+# The State Of Tooling In The Ethereum Ecosystem
 
 The Ethereum ecosystem is still very new as a result the specific tools and libraries required are also either in there infancy or lacking. The existing tools and libraries are often still in alpha, beta or zero prefixed versions---Solidity itself is only at version `0.4`. This means they are often unstable, and with changing interfaces. The Ethereum in some respect tries to build a newer and more decentralized web, this is why the main library is called \gls{web3} and the most mature version of it is written in JavaScript. A lot of the tooling is written using \gls{node}. Reminiscent of the JavaScript ecosystem, the Ethereum ecosystem moves fast, even faster than JavaScript's, and the language syntax, tools and libraries are constantly changing.
 
