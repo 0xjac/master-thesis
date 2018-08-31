@@ -58,7 +58,7 @@ State variables are variables whose values are permanently stored with the contr
 
 ### Function Modifiers
 
-Function modifiers are specific functions associated with the regular functions of a contract. The modifiers are called before the actual function and thus have the ability to change the behavior of the function. They are very popular to provide access-control to functions which use should be limited according to specific conditions.
+Function modifiers are specific functions associated with the regular functions of a contract. The modifiers are called before the actual function and thus have the ability to change the behaviour of the function. They are very popular to provide access-control to functions which use should be limited according to specific conditions.
 
 ```{caption="OpenZepplin's implementation of the \texttt{onlyOwner} modifier which restrict the access to the owner of the contract." label="lst:OZOnlyOwner" language=Solidity}
 /**

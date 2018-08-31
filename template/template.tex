@@ -370,9 +370,9 @@ $endif$
 % Style for links
 \newcommand{\link}[2]{\underline{\href{#1}{#2}}}
 
-\usepackage[nomain,acronym,xindy={glsnumbers=false},toc,shortcuts]{glossaries}
+\usepackage[acronym,xindy={glsnumbers=false},toc,shortcuts]{glossaries}
 \makeglossaries
-\include{glossary}
+\loadglsentries{glossary}
 
 \usepackage{tikz-uml}
 \usepackage{javascript}
@@ -396,8 +396,8 @@ $body$
 \backmatter
 
 % \chapter{Glossary} %optional
-\glsaddall
-\setglossarystyle{altlist}
+% \setglossarystyle{altlist}
+\printglossary[type=\acronymtype,title=List Of Abbreviations]
 \printglossary[title=Glossary,toctitle=Glossary]
 
 $if(natbib)$

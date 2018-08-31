@@ -6,17 +6,17 @@
 
 \newglossaryentry{web3}{
   name        = {Web3},
-  description = {Web3 often refers to \texttt{web3js}, the Javascript implementation of the ethereum JSON-RPC \gls{api}. It may also refer to other implementation in different languages. Overall it is the technology aiming to build the next and more decentralized version of the web 2.0 we know today}
+  description = {Web3 often refers to \texttt{web3js}, the Javascript implementation of the Ethereum JSON-RPC \gls{api}. It may also refer to other implementation in different languages. Overall it is the technology aiming to build the next and more decentralised version of the web 2.0 we know today}
 }
 
 \newglossaryentry{troll}{
   name = {internet troll},
-  description = {A person who intentionally antagonizes others online by posting inflammatory, irrelevant, or offensive comments or other disruptive content \citep{deftroll}}
+  description = {A person who intentionally antagonises others online by posting inflammatory, irrelevant, or offensive comments or other disruptive content \citep{deftroll}}
 }
 
 \newglossaryentry{gls-ens}{
   name = {ENS},
-  description = {The Ethereum Name Service, the equivalent of \gls{dns} for Ethereum addresses allwoing to resolve names such as \texttt{revolution.eth} to\linebreak\texttt{0x5ADF43DD006c6C36506e2b2DFA352E60002d22Dc}}
+  description = {The Ethereum Name Service, the equivalent of \gls{dns} for Ethereum addresses allowing to resolve names such as \texttt{revolution.eth} to\linebreak\texttt{0x5ADF43DD006c6C36506e2b2DFA352E60002d22Dc}}
 }
 
 \newglossaryentry{dns}{
@@ -26,7 +26,7 @@
 
 \newglossaryentry{multisig}{
   name = {multsig wallet},
-  description = {A multi-signature (multisig) wallet is a wallet requiring the signatures of more than one key to authorize a transaction. Usually it requires $M$ out of $N$ signatures, where $M \leq N$}
+  description = {A multi-signature (multisig) wallet is a wallet requiring the signatures of more than one key to authorise a transaction. Usually it requires $M$ out of $N$ signatures, where $M \leq N$}
 }
 
 \newglossaryentry{node}{
@@ -46,12 +46,22 @@
 
 \newglossaryentry{gls-rlp}{
   name ={Recursive Length Prefix},
-  description = {Recursive Length Prefix is the main serialization technique in Ethereum. It permits the encoding arbitrarily nested arrays of binary data and is used to encode structure and objects in Ethereum.}
+  description = {Recursive Length Prefix is the main serialisation technique in Ethereum. It permits the encoding arbitrarily nested arrays of binary data and is used to encode structure and objects in Ethereum.}
 }
 
 \newglossaryentry{gls-uml}{
   name ={Unified Modeling Language},
   description = {The Unified Modeling Language is a general-purpose visual modeling language that is used to specify, visualize, construct, and document the artifacts of a software system \citep{uml}.}
+}
+
+\newglossaryentry{gls-segwit}{
+  name ={Segregated Witness},
+  description = {Segregated Witness is an update to the Bitcoin software, designed to fix a range of serious issues such as solving transaction malleability, a well-known weak spot in Bitcoin software and improving scalability\citep{ctsegwit}.}
+}
+
+\newglossaryentry{gls-uasf}{
+  name ={User Activated Soft Fork},
+  description = {User Activated Soft Fork is a mechanism where the activation time of a soft fork occurs on a specified date enforced by full nodes, a concept sometimes referred to as the economic majority.\citep{uasfco}.}
 }
 
 % Acronyms
@@ -70,3 +80,5 @@
 \newacronym[see={[Glossary:]{gls-rlp}}]{rlp}{RLP}{Recursive Length Prefix\glsadd{gls-rlp}}
 \newacronym[see={[Glossary:]{gls-ens}}]{ens}{ENS}{Ethereum Name Service\glsadd{gls-ens}}
 \newacronym[see={[Glossary:]{gls-uml}}]{uml}{UML}{Unified Modeling Language\glsadd{gls-uml}}
+\newacronym[see={[Glossary:]{gls-segwit}}]{segwit}{SegWit}{Segregated Witness\glsadd{gls-segwit}}
+\newacronym[see={[Glossary:]{gls-uasf}}]{uasf}{UASF}{User Activated Soft Fork\glsadd{gls-uasf}}
