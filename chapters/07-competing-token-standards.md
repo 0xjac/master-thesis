@@ -6,7 +6,7 @@ In this chapter, we will explore three of the main tokens standard proposals com
 
 ## ERC223
 
-ERC223 was submitted on March 5^th^ 2017, by a developer knows as Dexaran. It has one clear goal in mind: to address the issue of accidentally locking token in ERC20 (see section \ref{locked-tokens}).
+ERC223 was submitted on March 5^th^ 2017, by a developer knows as Dexaran\citep{erc223}. It has one clear goal in mind: to address the issue of accidentally locking token in ERC20 (see section \ref{locked-tokens}).
 
 The solution suggested by this proposal is to define a `tokenFallback` function similar to the default fallback function \citepalias[see][Fallback Function]{soldoc}. This function takes as parameters the address of the spender (`from`), the amount of tokens transferred and a `data` field. Any contract wishing to receive tokens must implement this function.
 
@@ -37,7 +37,7 @@ Finally the developer behind the standard appears to be more focus on solving th
 
 ## ERC827
 
-ERC827 is another proposal to fix ERC20. Unlike ERC777 which takes a more independent approach which is fully dissociated form ERC20 and where both standard can be implemented side-by-side, the ERC827 proposal tries to build a second standard on top of ERC20.
+ERC827 is another proposal to fix ERC20\citep{erc827}. Unlike ERC777 which takes a more independent approach which is fully dissociated form ERC20 and where both standard can be implemented side-by-side, the ERC827 proposal tries to build a second standard on top of ERC20.
 
 This proposal is overall rather short as well. It defines three additional functions to reduce the changes of locking tokens---`transferAndCall`, `approveAndCall` and `transferFromAndCall`. Fundamentally, those three functions are wrapper around the ERC20 `transfer`, `approve` and `transferFrom` functions where the wrapper function calls another function--whose name and parameters are initially passed to the wrapper function.
 

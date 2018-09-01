@@ -89,9 +89,52 @@ View functions in Solidity are defined as function which do not modify the state
 7. Using low-level calls.
 8. Using inline assembly that contains certain opcodes.
 
+Note that the solidity compiler will automatically generate getter functions for public state variables that is view functions with the same names as the variables return the value of the state variables. For example in the listing \ref{lst:owner}, the Solidity compiler will generate a getter named `owner()` for the public state variable `owner`.
+
 
 ### Fallback Function
 
 Every contract is allowed to have at most one unnamed function which is referred to as the "fallback function". This fallback function is called if the transaction contains no data---which contains the id of the function to call---or if the id provided in the data does not match any function of the contract.
 
 The fallback function is also limited to only 2300 gas for its execution.
+
+
+### Visualising Transactions And Interactions
+
+There is no standard notation---specific to Ethereum---to visualise the interaction between different entites or to illustrate a transaction between multiple parties. Despite, there exists more generic notations such as the \acrfull{uml} which is well know by virtually every software engineer and include sequence diagrams to depict the interactions between various entities over time.
+
+In this thesis, we will use a customised version of \gls{uml} sequence diagrams to illustrate transactions and calls between addresses---both regular accounts and contracts---on the Ethereum Network. This modified version of sequence diagrams includes colouring of the messages exchanged and activation boxes to indicate the type of communication taking place. Specifically, off-chain communications are painted green, Ethereum transactions for which the sender must pay gas and which are asynchronous in nature, are coloured in red and finally calls, either as part of a transaction or on its own is represented in blue.
+
+Moreover, if the execution of a transaction is stopped erroneously because of a revert or a throw, the transaction will have a return arrow with the word `REVERT` or `THROW` accordingly. Note that the transaction, in practice, does not return this information. The transaction is minded similar to any other transaction and it is only once the transaction receipt is recovered that one can see if the transaction was reverted, thrown, or executed successfully.
+
+Finally, to help with clarity, some of the parameters of functions may be omitted and the name of an entity may be used for parameters instead of its Ethereum addresses as it would in an actual transaction. Contracts are represented by object symbols and regular accounts by actor symbols, the class attribute for contracts may be an interface implemented by the contract or the role of the contract. For actors, the class attribute---if present---always indicates the role of the actor.
+
+
+As an example let use consider the example code for a centralised administrator from the Ethereum website \citep{ethowner}---shown in the listing \ref{lst:owner}.
+
+```{caption="Centralised administrator contract, example from the Ethereum Foundation website." label="lst:owner" language=Solidity}
+contract owned {
+    address public owner;
+
+    function owned() {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
+
+    function transferOwnership(address newOwner) onlyOwner {
+        owner = newOwner;
+    }
+}
+```
+
+The figure \ref{fig:uml} illustrate a modified \gls{uml} diagram between two regular accounts---Alice and Bob---and the contract Carlos implementing the centralised administrator---whose code is written in the listing \ref{lst:owner}. In the depicted scenario, Alice is the current owner of Carlos. She begins by making a transaction which calls `transferOwnership` on Carlos which first verifies if Alice is the current owner thanks to the `onlyOwner` modifier and then update the state of Carlos to set Bob as the new owner of the contract.
+
+\input{fig/umlexample}
+
+Next, Alice can inform Bob off-chain that he became the new owner of Carlos. Bob can verify this claim easily by calling the `owner` function---which was automatically generated from the public state variable: `owner`.
+
+Finally, for illustrative purposes, Alice, tries to set herself back as the owner by calling `transferOwnership` again. Be that as it may, Alice is not the current owner of Carlos and this time the `onlyOwner` modifier fails and causes the transaction to revert.

@@ -1,6 +1,102 @@
 \appendix
 
-# ERC820 Vanitygen Script
+# The `devdoc` And `userdoc` Raw \gls{json} Data Of The ERC820 Registry
+
+
+```{caption="The \texttt{devdoc} and \texttt{userdoc} in \gls{json} format of the ERC820 registry, extracted from the metadata of the compilation's standard output from the contract." label="lst:erc820doc" language=json}
+{
+  "devdoc": {
+    "author": "Jordi Baylina and Jacques Dafflon",
+    "methods": {
+      "getInterfaceImplementer(address,bytes32)": {
+        "params": {
+          "_addr": "Address being queried for the implementer of an interface. (If `_addr == 0` then `msg.sender` is assumed.)",
+          "_interfaceHash": "keccak256 hash of the name of the interface as a string. E.g., `web3.utils.keccak256('ERC777Token')`."
+        },
+        "return": "The address of the contract which implements the interface `_interfaceHash` for `_addr` or `0x0` if `_addr` did not register an implementer for this interface."
+      },
+      "getManager(address)": {
+        "params": {
+          "_addr": "Address for which to return the manager."
+        },
+        "return": "Address of the manager for a given address."
+      },
+      "implementsERC165Interface(address,bytes4)": {
+        "details": "This function may modify the state when updating the cache. However, this function must have the `view` modifier since `getInterfaceImplementer` also calls it. If called from within a transaction, the ERC165 cache is updated.",
+        "params": {
+          "_contract": "Address of the contract to check.",
+          "_interfaceId": "ERC165 interface to check."
+        },
+        "return": "`true` if `_contract` implements `_interfaceId`, false otherwise."
+      },
+      "implementsERC165InterfaceNoCache(address,bytes4)": {
+        "params": {
+          "_contract": "Address of the contract to check.",
+          "_interfaceId": "ERC165 interface to check."
+        },
+        "return": "`true` if `_contract` implements `_interfaceId`, false otherwise."
+      },
+      "interfaceHash(string)": {
+        "params": {
+          "_interfaceName": "Name of the interface."
+        },
+        "return": "The keccak256 hash of an interface name."
+      },
+      "setInterfaceImplementer(address,bytes32,address)": {
+        "params": {
+          "_addr": "Address to define the interface for. (If `_addr == 0` then `msg.sender` is assumed.)",
+          "_interfaceHash": "keccak256 hash of the name of the interface as a string. For example, `web3.utils.keccak256('ERC777TokensRecipient')` for the `ERC777TokensRecipient` interface."
+        }
+      },
+      "setManager(address,address)": {
+        "params": {
+          "_addr": "Address for which to set the new manager. (If `_addr == 0` then `msg.sender` is assumed.)",
+          "_newManager": "Address of the new manager for `addr`. (Pass `0x0` to reset the manager to `_addr` itself.)"
+        }
+      },
+      "updateERC165Cache(address,bytes4)": {
+        "params": {
+          "_contract": "Address of the contract for which to update the cache.",
+          "_interfaceId": "ERC165 interface for which to update the cache."
+        }
+      }
+    },
+    "title": "ERC820 Pseudo-introspection Registry Contract"
+  },
+  "userdoc": {
+    "methods": {
+      "getInterfaceImplementer(address,bytes32)": {
+        "notice": "Query if an address implements an interface and through which contract."
+      },
+      "getManager(address)": {
+        "notice": "Get the manager of an address."
+      },
+      "implementsERC165Interface(address,bytes4)": {
+        "notice": "Checks whether a contract implements an ERC165 interface or not. The result is cached. If the cache is out of date, it must be updated by calling `updateERC165Cache`."
+      },
+      "implementsERC165InterfaceNoCache(address,bytes4)": {
+        "notice": "Checks whether a contract implements an ERC165 interface or not without using nor updating the cache."
+      },
+      "interfaceHash(string)": {
+        "notice": "Compute the keccak256 hash of an interface given its name."
+      },
+      "setInterfaceImplementer(address,bytes32,address)": {
+        "notice": "Sets the contract which implements a specific interface for an address. Only the manager defined for that address can set it. (Each address is the manager for itself until it sets a new manager.)"
+      },
+      "setManager(address,address)": {
+        "notice": "Sets the `_newManager` as manager for the `_addr` address. The new manager will be able to call `setInterfaceImplementer` for `_addr`."
+      },
+      "updateERC165Cache(address,bytes4)": {
+        "notice": "Updates the cache with whether contract implements an ERC165 interface or not."
+      }
+    }
+  }
+}
+```
+
+# ERC820 Vanitygen
+
+## Vanitygen Bash Script
 
 ```{caption="The bash script used to generate a vanity address for the ERC820 registry." label="lst:vanitygen" language=bash}
 #! /bin/bash
@@ -153,6 +249,8 @@ for VALUE in `seq 0 16 32768`; do
 done
 
 ```
+
+## Vanitygen Javascript Info Script
 
 ```{caption="The Javascript program called by the ERC820 Vanity generator to find the address of a version of the compiled contract." label="lst:vanitygeninfo" language=JavaScript}
 const EthereumTx = require('ethereumjs-tx');

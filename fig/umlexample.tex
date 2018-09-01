@@ -1,0 +1,31 @@
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[thick]
+  \begin{umlseqdiag}
+    \umlactor[class=Owner,scale=0.6,fill=white!0]{Alice}
+    \umlobject[class=Contract,fill=white!0,x=4]{Carlos}
+    \umlactor[no ddots,scale=0.6,fill=white!0]{Bob}
+    \begin{umlcall}[dt=6,draw=BrickRed,fill=BrickRed!20,op={transferOwnership(Bob)}]{Alice}{Carlos}
+      \begin{umlcallself}[draw=MidnightBlue,fill=MidnightBlue!20,op={onlyOwner()}]{Carlos}
+      \end{umlcallself}
+    \end{umlcall}
+    \begin{umlcall}[dt=6,draw=OliveGreen,fill=OliveGreen!20,op={notify Bob he is the owner}]{Alice}{Bob}
+      \begin{umlcall}[dt=6,draw=MidnightBlue,fill=MidnightBlue!20,op={owner()},return=Bob]{Bob}{Carlos}
+      \end{umlcall}
+    \end{umlcall}
+    \begin{umlcall}[dt=6,draw=BrickRed,fill=BrickRed!20,op={transferOwnership(Alice)},return=REVERT]{Alice}{Carlos}
+      \begin{umlcallself}[draw=MidnightBlue,fill=MidnightBlue!20,op={onlyOwner()}]{Carlos}
+      \end{umlcallself}
+    \end{umlcall}
+    \umlsdnode[dt=16]{Bob}
+  \end{umlseqdiag}
+  \filldraw[draw=BrickRed,fill=BrickRed!20] (0,-8) circle (.2);
+  \node at (1.2,-8) {Transaction};
+  \filldraw[draw=MidnightBlue,fill=MidnightBlue!20] (3,-8) circle (.2);
+  \node at (3.6,-8) {Call};
+  \filldraw[draw=OliveGreen,fill=OliveGreen!20] (5,-8) circle (.2);
+  \node at (6,-8) {Off-chain};
+\end{tikzpicture}
+\caption{Alice transfer the ownership of Carlos to Bob, then attempts to transfer to ownership again but fails as she is not the owner anymore.}
+\label{fig:uml}
+\end{figure}

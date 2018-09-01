@@ -1,6 +1,10 @@
 # Future Research and Work
 
-Even once the ERC777 standard is approved, there will be a large amount of work to do.
+Even once the ERC777 standard is approved, there will be a large amount of work to do, including assisting with formal verification of the reference implementation, building tools and services (based on hooks and operators), promoting the standard, and helping the community working on tokens implementations and dapps related to ERC777.
+
+## Formal Verification Of The Reference Implementation
+
+The reference implementation described in section \ref{reference-implementation} is currently being formally verified by an independent third-party. We are assisting them and using their feedback to improve the reference implementation, we expect later to further modify the reference implementation based on their findings.
 
 ## Generic Operators And Hooks For ERC777 End-Users
 
@@ -14,15 +18,9 @@ Efforts must be spent researching how to properly provide generic operators and 
 
 The ERC777 standard is lucky to already have wide community support and acceptance. We already see many people looking it creating their own ERC777 tokens. A simple look at the number of download of the ERC777 reference implementation via \gls{npm} which is over 230 or the over 50 stars on its Github repository. We can see interest is picking up but there is still a long way to go.
 
-\begin{figure}[!htbp]
-\label{fig:ethcc}
-\centering
-\includegraphics[width=0.8\textwidth]{ethcc}
-\caption{Jordi Baylina and Jacques Dafflon presenting the ERC777 standard at EthCC in Paris (March 2018). Photo credit: HelloGold Foundation}
-\end{figure}
+\input{fig/ethcc}
 
-
-Meeting the community and providing talks such as the one at EthCC in Paris, back in March 2018 \citep{ethcc} are also important. We hope to have the opportunity to talk about ERC777 at future Ethereum events including the Web3 summit in Berlin, the Ethereum Magicians' Council of Prague and Devcon4 also in Prague.
+Meeting the community and providing talks such as the one at EthCC in Paris (see figure \ref{fig:ethcc}), back in March 2018 \citep{ethcc} are also important. We hope to have the opportunity to talk about ERC777 at future Ethereum events including the Web3 summit in Berlin, the Ethereum Magicians' Council of Prague and Devcon4 also in Prague.
 
 ## Assistance For ERC777 Token Designers
 
