@@ -18,7 +18,7 @@ It was then the only framework which allowed us to quickly test and provide cove
 
 ## Documentation
 
-The Ethereum Foundation defines a syntax for documenting the code, named "natspec" \citepalias[see]{natspec}. The `solc` compiler is then able to extract the documentation from the code and return as part of the standard output file, a \gls{json} version of the documentation together with a neatly parsed version of the function signature. The appendix \ref{lst:erc820doc} shows the raw \gls{json} data containing the documentation---as output by `solc`---for the ERC820 registry.
+The Ethereum Foundation defines a syntax for documenting the code, named "natspec" \citepalias[see]{natspec}. The `solc` compiler is then able to extract the documentation from the code and return as part of the standard output file, a \gls{json} version of the documentation together with a neatly parsed version of the function signature. The appendix \ref{lst:erc820doc} x the raw \gls{json} data containing the documentation---as output by `solc`---for the ERC820 registry.
 
 Unfortunately there is no easy-to-use tool to generate a nice HTML version of the documentation from such \gls{json} data. One such tool exists, `doxity` but it has fallen victim to the fast changing Ethereum Ecosystem. The `doxity` tool has not received an update for almost a year and does not support code written for Solidity greater than version `0.4.18` which is much older than the current `0.4.24` version.
 

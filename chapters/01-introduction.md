@@ -1,13 +1,5 @@
 # Introduction
 
-<!-- Introduce:
-
- - Blockchain / Ethereum (briefly)
- - Define Tokens, ERC20, the need for a new standard
- - Introduce ERC777 
- - Define payment channels and reason for existence, use as credit card
- - Define loyalty points for credit cards -->
-
 ## Motivation
 
 Ethereum is a new blockchain inspired by Bitcoin, with the design goal of abstracting away transaction complexity and allowing for easy programmatic interaction through the use of a Virtual Machine and relying upon the state of this Virtual Machine rather than dealing with transaction outputs; transactions merely modify the state.
