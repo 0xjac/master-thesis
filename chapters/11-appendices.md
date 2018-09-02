@@ -1,6 +1,6 @@
 \appendix
 
-# The `devdoc` And `userdoc` Raw \gls{json} Data Of The ERC820 Registry
+# The `devdoc` And `userdoc` Raw \acrshort{json} Data Of The ERC820 Registry
 
 
 ```{caption="The \texttt{devdoc} and \texttt{userdoc} in \gls{json} format of the ERC820 registry, extracted from the metadata of the compilation's standard output from the contract." label="lst:erc820doc" language=json}

@@ -1,6 +1,6 @@
-# Ethereum, A Decentralized Computing Platform
+# Ethereum, A Decentralised Computing Platform
 
-The Ethereum network is a decentralized computing platform. As described in its the white paper, Ethereum "[...] is essentially the ultimate abstract foundational layer: a blockchain with a built-in Turing-complete programming language, allowing anyone to write smart contracts and decentralized applications where they can create their own arbitrary rules for ownership, transaction formats and state transition functions" \citep{buterin2013whitepaper}. This differentiates Ethereum from Bitcoin which is a trustless peer-to-peer version of electronic cash and lacks a Turing-complete language.
+The Ethereum network is a decentralised computing platform. As described in its the white paper, Ethereum "[...] is essentially the ultimate abstract foundational layer: a blockchain with a built-in Turing-complete programming language, allowing anyone to write smart contracts and decentralized applications where they can create their own arbitrary rules for ownership, transaction formats and state transition functions" \citep{buterin2013whitepaper}. This differentiates Ethereum from Bitcoin which is a trustless peer-to-peer version of electronic cash and lacks a Turing-complete language.
 
 ## The Ether Currency And Gas
 
@@ -35,7 +35,7 @@ Transactions and messages are very similar. The difference is that a transaction
 
 ## The Ethereum Virtual Machine
 
-Ethereum is a decentralized computing platform. In other words alongside a blockchain, Ethereum provides a Turing-complete language and the \gls{evm}, a virtual machine able to interpret and execute code. This code "is written in a low-level, stack-based bytecode language, referred to as "Ethereum virtual machine code" or "EVM code"\citep{buterin2013whitepaper}. This bytecode is represented by a series of bytes. The execution of code consists of first setting an instruction pointer at the beginning of the bytecode sequence, next process the operation at the current location of the point, and last increment the instruction pointer to the next byte. Those steps repeated forever until either the end of the bytecode sequence is reached, an error is raised or a `STOP` or `RETURN` instruction is executed.
+Ethereum is a decentralised computing platform. In other words alongside a blockchain, Ethereum provides a Turing-complete language and the \gls{evm}, a virtual machine able to interpret and execute code. This code "is written in a low-level, stack-based bytecode language, referred to as "Ethereum virtual machine code" or "EVM code"\citep{buterin2013whitepaper}. This bytecode is represented by a series of bytes. The execution of code consists of first setting an instruction pointer at the beginning of the bytecode sequence, next process the operation at the current location of the point, and last increment the instruction pointer to the next byte. Those steps repeated forever until either the end of the bytecode sequence is reached, an error is raised or a `STOP` or `RETURN` instruction is executed.
 
 The operations can perform computations and interact with data. There are three kinds of mediums to store data. First, there is a stack. This a commonly know abstract data type in computer science. Data can be added by using a push operation which adds the data on top of the stack. Mutually, the data can then be removed with a pop operation which removes and return the data from the top of the stack. Mainly, the stack is known as a \gls{lifo} data structure meaning the last value pushed (added) is the first value popped (taken). Secondly, there is a memory, which is an ever-expandable array of bytes. Those kinds of storage are both non-persistent storage. Within the context of Ethereum, this translates to this data only being available within the call or transaction and not being permanently stored on the blockchain. The third and last kind of storage is commonly referred to as "storage" is a permanent key/value store intended for long-term storage.
 
@@ -116,9 +116,9 @@ Every contract is allowed to have at most one unnamed function which is referred
 The fallback function is also limited to only 2300 gas for its execution.
 
 
-### Visualising Transactions And Interactions
+## Visualising Transactions And Interactions
 
-There is no standard notation---specific to Ethereum---to visualise the interaction between different entites or to illustrate a transaction between multiple parties. Despite, there exists more generic notations such as the \acrfull{uml} which is well know by virtually every software engineer and include sequence diagrams to depict the interactions between various entities over time.
+There is no standard notation---specific to Ethereum---to visualise the interaction between different entities or to illustrate a transaction between multiple parties. Despite, there exists more generic notations such as the \acrfull{uml} which is well know by virtually every software engineer and include sequence diagrams to depict the interactions between various entities over time.
 
 In this thesis, we will use a customised version of \gls{uml} sequence diagrams to illustrate transactions and calls between addresses---both regular accounts and contracts---on the Ethereum Network. This modified version of sequence diagrams includes colouring of the messages exchanged and activation boxes to indicate the type of communication taking place. Specifically, off-chain communications are painted green, Ethereum transactions for which the sender must pay gas and which are asynchronous in nature, are coloured in red and finally calls, either as part of a transaction or on its own is represented in blue.
 
