@@ -18,7 +18,7 @@ A part of this thesis' objective is to provide, as well, a reference implementat
 
 ## Challenges
 
-Writing a standard requires the ability to define specifications which are not constrained to a single use case [TODO> fix that>] but to many various ones. Therefore on one hand, the standard needs to be generic enough to be adopted and used by a large number of people. On the other hand its definition needs to be precise and explicit enough to avoid any ambiguities, conflicting conditions and undefined scenarios which are a recipe for disaster. The language of the standard must also be clear but succinct and easily understandable by non-native and non-proficient speakers.
+Writing a standard requires the ability to define specifications which have to be versatile and adaptable within strict confines. Therefore on one hand, the standard needs to be generic enough to be adopted and used by a large number of people. On the other hand its definition needs to be precise and explicit enough to avoid any ambiguities, conflicting conditions and undefined scenarios which are a recipe for disaster. The language of the standard must also be clear but succinct and easily understandable by non-native and non-proficient speakers.
 
 Finally, the core goal of the standard is to be accepted and used by as many members of the Ethereum community as possible. We decided the best approach to tackle this challenge is to build the standard with the community as much as possible by asking for their thoughts and feedback and incorporate it in the standard as much as possible, as for example with the `tokensToSend` hook.
 
