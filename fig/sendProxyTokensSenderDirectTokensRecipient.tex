@@ -15,7 +15,7 @@
         \begin{umlcall}[dt=6,op={\shortstack[l]{tokensToSend(Alice, Alice, Carlos, 10)}},draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Carole}
         \end{umlcall}
       \end{umlfragment}
-      \begin{umlcall}[dt=1,op=\shortstack{update\\ balances},draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+      \begin{umlcall}[dt=1,op={\shortstack[l]{update\\ balances}},draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
       \end{umlcall}
       \begin{umlfragment}[type={\shortstack[l]{tokensReceived\\ hook}},name=tokensReceived]
         \begin{umlcall}[dt=7,op={\shortstack[l]{getInterfaceImplementer(\\\qquad Carlos, ERC777TokensRecipient)}},draw=MidnightBlue,fill=MidnightBlue!20,return=Carlos]{Token Contract}{ERC820 Registry}

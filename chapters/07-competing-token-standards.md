@@ -6,7 +6,7 @@ In this chapter, we will explore three of the main tokens standard proposals com
 
 ## ERC223
 
-ERC223 was submitted on March 5^th^ 2017, by a developer knows as Dexaran\citep{erc223}. It has one clear goal in mind: to address the issue of accidentally locking token in ERC20 (see section \ref{locked-tokens}).
+ERC223 was submitted on March 5^th^ 2017, by a developer knows as Dexaran \citep{erc223}. It has one clear goal in mind: to address the issue of accidentally locking token in ERC20 (see section \ref{locked-tokens}).
 
 The solution suggested by this proposal is to define a `tokenFallback` function similar to the default fallback function \citepalias[see][Fallback Function]{soldoc}. This function takes as parameters the address of the spender (`from`), the amount of tokens transferred and a `data` field. Any contract wishing to receive tokens must implement this function.
 
@@ -78,7 +78,6 @@ function isAuthorized(address src, bytes4 sig) internal view returns (bool) {
 }
 ```
 
+The scenario of the attack is illustrated in figure \ref{fig:customcallattack}. First the attacker managed to hijack the contract with a first transaction\footnote{\url{https://etherscan.io/tx/0x3b7bd618c49e693c92b2d6bfb3a5adeae498d9d170c15fcc79dd374166d28b7b}} to transfer zero tokens and then asked the token contract to call the `setOwner` function on itself---to "notify" the contract of the zero tokens it receiveds. Normally the access to this function is limited thanks to the use of `ds-auth` but in this case the call came from the contract itself and was therefore authorised. Obviously the attacker set his own address as the new owner and thus gain control of the contract. At this point the attacks has the ability to call functions---as the owner---that other addresses are not able to call, namely the `mint` function to issue new tokens. With its second transaction\footnote{\url{https://etherscan.io/tx/0x9b559ffae76d4b75d2f21bd643d44d1b96ee013c79918511e3127664f8f7a910}} the attacked mined eleven million ATN tokens for itself. Finally, in an attempt to cover its tracks, the attacker set the owner back to the original owner with a third transaction\footnote{\url{https://etherscan.io/tx/0xfd5c2180f002539cd636132f1baae0e318d8f1162fb62fb5e3493788a034545a}}.
 
-When the attacker issued the transaction\footnote{\url{https://etherscan.io/tx/0x3b7bd618c49e693c92b2d6bfb3a5adeae498d9d170c15fcc79dd374166d28b7b}} to transfer zero tokens it then asked the token contract to call the `setOwner` function on itself. Normally the access to this function is limited thanks to the use of `ds-auth` but in this case the call came from the contract itself and was therefore authorised. Obviously the attacker set his own address as the new owner and thus gain control of the contract. At this point the attacks has the ability to call functions---as the owner---that other addresses are not able to call, namely the `mint` function to issue new tokens. With its second transaction\footnote{\url{https://etherscan.io/tx/0x9b559ffae76d4b75d2f21bd643d44d1b96ee013c79918511e3127664f8f7a910}} the attacked mined eleven million ATN tokens for itself. Finally, in an attempt to cover its tracks, the attacker set the owner back to the original owner with a third transaction\footnote{\url{https://etherscan.io/tx/0xfd5c2180f002539cd636132f1baae0e318d8f1162fb62fb5e3493788a034545a}}.
-
->TODO add diagram of the attack
+\input{fig/custom_call_attack}

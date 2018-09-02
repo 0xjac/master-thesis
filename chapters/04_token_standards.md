@@ -40,11 +40,8 @@ function transfer(address _to, uint256 _value) public returns (bool) {
 ```
 
 The implementation of the `transfer` function in the listing \ref{lst:OZTransfer} shows---on lines 7 and 8---the conditions checked before effectually performing the transfer and update of the balances---on lines 10 and 11.
-The Solidity instruction `require` reverts the transaction if its parameter is false and continues the execution if the parameter is true. Most commonly, a condition is evaluated and passed as a parameter to `revert`. If the condition is false, `require` will call the `REVERT` EVM opcode which stops the execution of the transaction without consuming all of the gas and revert the state changes.
 
-> TODO Move require into solidity section
-
-The first check ensures that the token holder---here referred as the sender---does not try to send a number of tokens higher than its balance. The variable `msg.sender` is a special value in Solidity which holds the address of the sender of the message for the current call. In other words, `msg.sender` is the address which called the `transfer` function.
+The first check ensures that the token holder---here referred to as the sender---does not try to send a number of tokens higher than its balance. The variable `msg.sender` is a special value in Solidity which holds the address of the sender of the message for the current call. In other words, `msg.sender` is the address which called the `transfer` function.
 
 The second checks ensure that the recipient---defined in the parameter `_to`---is not the zero address. The notation `address(0)` is a cast of the number literal zero to a 20 bits address. The zero address is a special address. Sending tokens to the zero address is assimilated to burning the tokens. Ideally the balance of the zero address should not be updated in this case. This is not always the case, tokens such as Tronix are held by the zero address. A quick look at their implementation shown in listing \ref{lst:TronixTransfer} of the transfer function shows there is no check to ensure the recipient is not the zero address. Note that the `validAddress` modifier only verifies the `msg.sender` or in other words, the spender, not the recipient.
 
@@ -113,7 +110,7 @@ function transferFrom(
 
 Overall the ERC20 token standard was kept simple in its design. Hence the standard results in simple token contracts. This is one of the upsides of the standard. Token contracts can be kept short and simple which makes them easy and cheap to audit. This is especially important as an insecure contract may result in funds being stolen or lost from the contract and good smart contract auditors are expensive and often unavailable.
 
-> TODO Add example of tokens stolen, locked or incorrectly (fraudulently) issued
+The attack described at the chapter ref{erc827} and illustrated in figure \ref{fig:customcallattack} is a perfect evidence of the issues that arise when using a more complex token standard. In this specific instance the complexity of the design contributed to a flaw not being detected in a token contract which lead to an attacker fraudulently issuing eleven million tokens.
 
 At the other end of the spectrum however, this translates to a higher burden on the user, applications and wallets interacting with the tokens.
 

@@ -3,14 +3,14 @@ sudo: required
 
 before_install:
 - sudo apt-get update -qq
-- sudo apt-get install -y texlive-xetex texlive-bibtex-extra texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra xindy
+- sudo apt-get install -y texlive-xetex texlive-bibtex-extra texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-cjk-common fonts-noto-cjk xindy
 - wget https://github.com/jgm/pandoc/releases/download/2.1.3/pandoc-2.1.3-1-amd64.deb
 - sudo dpkg -i pandoc-2.1.3-1-amd64.deb
 
 script:
   - "export PDF_OUTPUT=$(grep metadata.yml -e '^generated_file: '  | sed -e 's/generated_file: //' -e 's/ //g')"
   - mkdir _out
-  - make build DIST_DIR="./_out/"
+  - make build DIST_DIR="./_out"
 
 deploy:
   local-dir: _out

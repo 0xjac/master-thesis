@@ -1,0 +1,45 @@
+\begin{figure}[!htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[thick]
+  \begin{umlseqdiag}
+    \umlactor[scale=0.6,class=Attacker,fill=white!0]{Eve}
+    \umlobject[class=Token Contract,fill=white!0,x=7]{ATN}
+    \begin{umlfragment}[type={\shortstack[l]{1. Hijack\\\quad~contract}},name=tokensToSend]
+      \begin{umlcall}[dt=20,op={\shortstack[l]{transferFrom(from: Eve, \\\quad to: ATN Token Contract,\\\quad amount: 0,\\\quad data: Eve,\\\quad custom fallback: setOwner\\)}},draw=BrickRed,fill=BrickRed!20]{Eve}{ATN}
+        \begin{umlcall}[dt=1,op={\shortstack[l]{update\\ balances}},draw=MidnightBlue,fill=MidnightBlue!20]{ATN}{ATN}
+        \end{umlcall}
+        \begin{umlcall}[dt=4,padding=10,op={setOwner(Eve)},draw=MidnightBlue,fill=MidnightBlue!20]{ATN}{ATN}
+        \end{umlcall}
+        \begin{umlcallself}[dt=-15,draw=MidnightBlue,fill=MidnightBlue!40,op={isAuthorized(ATN Token Contract)},return=true]{ATN}
+        \end{umlcallself}
+        \begin{umlcall}[dt=4,op={\shortstack[l]{update\\ owner}},draw=MidnightBlue,fill=MidnightBlue!40]{ATN}{ATN}
+        \end{umlcall}
+      \end{umlcall}
+    \end{umlfragment}
+    \begin{umlfragment}[type={\shortstack[l]{2. Fraudulent\\\quad~minting}},name=tokensToSend]
+      \begin{umlcall}[dt=8,op={mint(Eve, 11000000)},draw=BrickRed,fill=BrickRed!20]{Eve}{ATN}
+        \begin{umlcall}[dt=1,op={isAuthorized(Eve)},return=true,draw=MidnightBlue,fill=MidnightBlue!20]{ATN}{ATN}
+        \end{umlcall}
+        \begin{umlcall}[dt=4,op={\shortstack[l]{update\\ balances}},draw=MidnightBlue,fill=MidnightBlue!20]{ATN}{ATN}
+        \end{umlcall}
+      \end{umlcall}
+    \end{umlfragment}
+    \begin{umlfragment}[type={\shortstack[l]{2. Hide\\\quad~attack}},name=tokensToSend]
+      \begin{umlcall}[dt=8,op={setOwner(previous owner)},draw=BrickRed,fill=BrickRed!20]{Eve}{ATN}
+        \begin{umlcall}[dt=1,op={isAuthorized(Eve)},return=true,draw=MidnightBlue,fill=MidnightBlue!20]{ATN}{ATN}
+        \end{umlcall}
+        \begin{umlcall}[dt=4,op={\shortstack[l]{update\\ owner}},draw=MidnightBlue,fill=MidnightBlue!20]{ATN}{ATN}
+        \end{umlcall}
+      \end{umlcall}
+    \end{umlfragment}
+  \end{umlseqdiag}
+  \filldraw[draw=BrickRed,fill=BrickRed!20] (0,-18) circle (.2);
+  \node at (1.2,-18) {Transaction};
+  \filldraw[draw=MidnightBlue,fill=MidnightBlue!20] (3,-18) circle (.2);
+  \node at (3.6,-18) {Call};
+\end{tikzpicture}
+}
+\caption{Custom Call Attack on the ATN Token Contract which allowed the attacker to mint eleven million ATN tokens.}
+\label{fig:customcallattack}
+\end{figure}

@@ -19,10 +19,10 @@ Another advantage of not tightly coupling the cost of execution with a currency-
 There are two types of accounts on the Ethereum network, externally owned accounts---commonly referred to as regular accounts---and contract accounts. A regular account is an account controlled by a human who holds the private key needed to sign transactions. In contrast, a contract account is an account where no individual knows the private key. The account can only send its ether and call functions of other accounts through its associated code. While an account is defined as "having a 20-byte address and state transitions being direct transfers of value and information between accounts" \citep{buterin2013whitepaper}, the words "account" and "address" are often used interchangeably. Nonetheless, to be exact, an account is defined in the white paper \citep{buterin2013whitepaper} as a set of four fields:
 
 \begin{description}
-\item[Nonce]A counter used to make sure each transaction can only be processed once
-\item[Balance]The account's current ether balance
+\item[Nonce]: A counter used to make sure each transaction can only be processed once
+\item[Balance]: The account's current ether balance
 \item[Code]The account's contract code, if present (for contracts)
-\item[Storage]The account's permanent storage (empty by default)
+\item[Storage]: The account's permanent storage (empty by default)
 \end{description}
 
 ## Transactions And Messages
@@ -91,6 +91,23 @@ View functions in Solidity are defined as function which do not modify the state
 
 Note that the solidity compiler will automatically generate getter functions for public state variables that is view functions with the same names as the variables return the value of the state variables. For example in the listing \ref{lst:owner}, the Solidity compiler will generate a getter named `owner()` for the public state variable `owner`.
 
+### The `require` Instruction
+
+The Solidity instruction `require` reverts the transaction if its parameter is false and continues the execution if the parameter is true. Most commonly, a condition is evaluated and passed as a parameter to `require`. If the condition is false, `require` will call the `REVERT` \gls{evm} opcode which stops the execution of the transaction without consuming all of the gas and revert the state changes.
+
+### The `msg` Variable
+
+The `msg` variable is globally available and contains multiple attributes:
+
+\begin{description}
+\item[msg.data]: The complete call data in \texttt{bytes}.
+\item[msg.gas]: The remaining gas available for the transaction as an unsigned integer (\texttt{uint}).
+\item[msg.sender]: The address of the sender of the message (i.e. the current call).
+\item[msg.sig]: The first four bytes of the call data (i.e. the function identifier) in \texttt{bytes4}.
+\item[msg.value]: The number of wei sent with the message as an unsigned integer (\texttt{uint}).
+\end{description}
+
+Note that the attributes---including `msg.sender` and `msg.value`---can change for external calls. This means, for example, that if a regular account Alice, calls a contract Carlos, Carlos will see Alice's address as the `msg.sender`. Next if Carlos makes a call to Carole, another contract, Carole will see the address of Carlos---not Alice---as the `msg.sender`.
 
 ### Fallback Function
 

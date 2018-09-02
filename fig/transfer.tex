@@ -6,7 +6,7 @@
     \umlobject[fill=white!0,no ddots]{Token Contract}
     \umlactor[fill=white!0,scale=0.6,class=Recipient]{Bob}
     \begin{umlcall}[dt=6,op={transfer(Bob, 10)},draw=BrickRed,fill=BrickRed!20]{Alice}{Token Contract}
-      \begin{umlcall}[op=\shortstack{update\\ balances},draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
+      \begin{umlcall}[op={\shortstack[l]{update\\ balances}},draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
         \end{umlcall}
     \end{umlcall}
     \umlsdnode[dt=16]{Bob}

@@ -1,0 +1,114 @@
+\begin{figure}[!htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[thick]
+  \begin{umlpackage}[x=3]{ERC820}
+
+    \umlclass{ERC820Registry}{
+    \# ERC820\_ACCEPT\_MAGIC : bytes32 = keccak256( \\\qquad abi.encodePacked("ERC820\_ACCEPT\_MAGIC")) \\
+    \# interfaces : mapping (address => mapping(bytes32 => address)) \\
+    \# managers : mapping (address => address) \\
+    }{
+    \uwave{+ getInterfaceImplementer() : address} \\
+    + setInterfaceImplementer() \\
+    + setManager() \\
+    \uwave{+ getManager(): address} \\
+    \umlstatic{+ interfaceHash() : bytes32} \\
+    }
+    \umlclass[x=9]{ERC820Implementer}{
+      erc820Registry: ERC820Registry
+    }{
+    \# setInterfaceImplementation() \\
+    \uwave{\# interfaceAddr() : address} \\
+    \# delegateManagement()
+    }
+
+    \umlHVuniaggreg{ERC820Implementer}{ERC820Registry}
+  \end{umlpackage}
+  \begin{umlpackage}[x=0,y=-9]{ERC777}
+    \umlclass[y=-8,type=interface]{ERC20Token}{}{
+    \umlvirt{\uwave{name() : string}}\\
+    \umlvirt{\uwave{symbol() : string}}\\
+    \umlvirt{\uwave{decimals() : uint8}}\\
+    \umlvirt{\uwave{totalSupply() : uint256}}\\
+    \umlvirt{\uwave{balanceOf(address owner) : uint256}}\\
+    \umlvirt{transfer() : bool}\\
+    \umlvirt{transferFrom() : bool}\\
+    \umlvirt{approve() : bool}\\
+    \umlvirt{\uwave{allowance() : uint256}}
+    }
+    \umlclass[type=interface]{ERC777Token}{}{
+    \umlvirt{\uwave{name() : string}}\\
+    \umlvirt{\uwave{symbol() : string}}\\
+    \umlvirt{\uwave{totalSupply() : uint256}}\\
+    \umlvirt{\uwave{balanceOf() : uint256}}\\
+    \umlvirt{\uwave{granularity() : uint256}}\\
+    \umlvirt{\uwave{defaultOperators() : address])}}\\
+    \umlvirt{\uwave{isOperatorFor() : bool}}\\
+    \umlvirt{authorizeOperator()}\\
+    \umlvirt{revokeOperator()}\\
+    \umlvirt{send()}\\
+    \umlvirt{operatorSend()}\\
+    \umlvirt{burn()}\\
+    \umlvirt{operatorBurn()}
+    }
+    \umlclass[x=9,y=-8]{ERC777ERC20BaseToken}{
+    \# mAllowed : mapping(address => mapping(address => uint256))
+    }{
+    \uwave{+ name() : string} \\
+    \uwave{+ symbol() : string} \\
+    \uwave{+ decimals() : uint8} \\
+    \uwave{+ totalSupply() : uint256} \\
+    \uwave{+ balanceOf(address owner) : uint256} \\
+    + transfer() : bool \\
+    + transferFrom() : bool \\
+    + approve() : bool \\
+    \uwave{+ allowance() : uint256 }
+    }
+    \umlclass[x=10]{ERC777BaseToken}{
+    \# mBalances : mapping(address => uint) \\
+    \# mDefaultOperators : address[] \\
+    \# mIsDefaultOperator : mapping(address => bool) \\
+    \# mRevokedDefaultOperator : mapping(address => mapping(address => bool)) \\
+    \# mAuthorizedOperators : mapping(address => mapping(address => bool)) \\
+    }{
+    \uwave{+ name() : string} \\
+    \uwave{+ symbol() : string} \\
+    \uwave{+ totalSupply() : uint256} \\
+    \uwave{+ balanceOf(address owner) : uint256} \\
+    \uwave{+ granularity() : uint256} \\
+    \uwave{+ defaultOperators() : address])} \\
+    \uwave{+ isOperatorFor() : bool} \\
+    + authorizeOperator() \\
+    + revokeOperator() \\
+    + send() \\
+    + operatorSend() \\
+    + burn() \\
+    + operatorBurn()
+    }
+
+    \umlHVHinherit{ERC777BaseToken}{ERC777Token}
+    \umlHVinherit{ERC777ERC20BaseToken}{ERC777BaseToken}
+    \umlHVHinherit{ERC777ERC20BaseToken}{ERC20Token}
+
+    \umlVHVinherit[weight=0.6]{ERC777BaseToken}{ERC820Implementer}
+
+    \begin{umlpackage}[x=11,y=-14]{example}
+      \umlclass[x=2]{ReferenceToken}{}{
+      + disableERC20() onlyOwner \\
+      + enableERC20() onlyOwner \\
+      + mint() onlyOwner \\
+      + burn() onlyOwner \\
+      + operatorBurn() \\
+      }
+
+      \umlHVinherit{ReferenceToken}{ERC777ERC20BaseToken}
+    \end{umlpackage}
+  \end{umlpackage}
+  \umlsimpleclass[x=0,y=-26]{ExternalERC777Implementation}{}{}
+  \umlVHVinherit{ExternalERC777Implementation}{ERC777ERC20BaseToken}
+\end{tikzpicture}
+}
+\caption[\acrshort{uml} class diagram of the ERC777 Reference Implementation]{\acrshort{uml} class diagram of the ERC777 Reference Implementation, with the ERC820 dependency and an extran implementation using the \texttt{ERC777ERC20BaseToken}.}
+\label{fig:erc777uml}
+\end{figure}
