@@ -31,11 +31,11 @@ fast: .gen-tex
 	@echo "PDF generated: $(DIST_DIR)/$(OUTPUT_FILE).pdf"
 
 .tex: .gen-tex
-	xelatex -output-directory="$(BUILD)" "$(OUTPUT)" > /dev/null
+	xelatex -output-directory="$(BUILD)" "$(OUTPUT)"
 	makeglossaries -d "$(BUILD)" "$(OUTPUT_FILE)"
-	xelatex -output-directory="$(BUILD)"  "$(OUTPUT)" > /dev/null
+	xelatex -output-directory="$(BUILD)"  "$(OUTPUT)"
 	bibtex "$(OUTPUT)"
-	xelatex -output-directory="$(BUILD)"  "$(OUTPUT)" > /dev/null
+	xelatex -output-directory="$(BUILD)"  "$(OUTPUT)"
 	xelatex -output-directory="$(BUILD)" "$(OUTPUT)"
 	mv "$(OUTPUT).pdf" "$(DIST_DIR)/"
 	@echo "PDF generated: $(DIST_DIR)/$(OUTPUT_FILE).pdf"
