@@ -37,3 +37,4 @@ biblio-title: References
 \defcitealias{eipxtemplate}{EIP-X}
 \defcitealias{soldoc}{Solidity documentation}
 \defcitealias{natspec}{Ethereum Natural Specification Format}
+\defcitealias{erc777logo}{ERC777 logo}
