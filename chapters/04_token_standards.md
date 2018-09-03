@@ -22,22 +22,9 @@ As seen on figure \ref{fig:erc20transfer} when performing a transfer, the spende
 
 Examples of the implementation details to update the balances are shown in listings \ref{lst:OZTransfer} and \ref{lst:TronixTransfer}.
 
-```{caption="OpenZepplin's implementation of ERC20's transfer function." label="lst:OZTransfer" language=Solidity}
-/**
-* @dev Transfer token for a specified address
-* @param _to The address to transfer to.
-* @param _value The amount to be transferred.
-*/
-function transfer(address _to, uint256 _value) public returns (bool) {
-  require(_value <= balances[msg.sender]);
-  require(_to != address(0));
-
-  balances[msg.sender] = balances[msg.sender].sub(_value);
-  balances[_to] = balances[_to].add(_value);
-  emit Transfer(msg.sender, _to, _value);
-  return true;
-}
-```
+\begin{minipage}{\linewidth}\centering
+\lstinputlisting[caption={OpenZepplin's implementation of ERC20's transfer function.},label=lst:OZTransfer,language=Solidity]{lst/oztransfer.sol}
+\end{minipage}
 
 The implementation of the `transfer` function in the listing \ref{lst:OZTransfer} shows---on lines 7 and 8---the conditions checked before effectually performing the transfer and update of the balances---on lines 10 and 11.
 
@@ -45,30 +32,9 @@ The first check ensures that the token holder---here referred to as the sender--
 
 The second checks ensure that the recipient---defined in the parameter `_to`---is not the zero address. The notation `address(0)` is a cast of the number literal zero to a 20 bits address. The zero address is a special address. Sending tokens to the zero address is assimilated to burning the tokens. Ideally the balance of the zero address should not be updated in this case. This is not always the case, tokens such as Tronix are held by the zero address. A quick look at their implementation shown in listing \ref{lst:TronixTransfer} of the transfer function shows there is no check to ensure the recipient is not the zero address. Note that the `validAddress` modifier only verifies the `msg.sender` or in other words, the spender, not the recipient.
 
-```{caption="Tronix transfer function." language=Solidity label="lst:TronixTransfer"}
-modifier isRunning {
-    assert (!stopped);
-    _;
-}
-
-modifier validAddress {
-    assert(0x0 != msg.sender);
-    _;
-}
-
-// ...
-
-function transfer(address _to, uint256 _value)
-    isRunning validAddress returns (bool success)
-{
-    require(balanceOf[msg.sender] >= _value);
-    require(balanceOf[_to] + _value >= balanceOf[_to]);
-    balanceOf[msg.sender] -= _value;
-    balanceOf[_to] += _value;
-    Transfer(msg.sender, _to, _value);
-    return true;
-}
-```
+\begin{minipage}{\linewidth}\centering
+\lstinputlisting[caption={Tronix transfer function.},label=lst:TronixTransfer,language=Solidity]{lst/tronixtransfer.sol}
+\end{minipage}
 
 The `transferFrom` function is the second function available to transfer tokens between addresses. It's use is depicted in figure \ref{fig:erc20transferFrom}. It takes three parameters the debtor address, the creditor address and the number of tokens to transfer.
 
@@ -78,33 +44,9 @@ The reason for the existence of this second function to transfer tokens is for c
 
 The internals of the `transferFrom` function are similar to those of the `transfer` function. The main differences are that the debtor address is not `msg.sender` but the value of the `_from` parameter, and there is---in most cases---an additional check to make sure whoever calls `transferFrom` is allowed to withdraw tokens of the `_from` address. of course, the allowed amount is updated as well for a successful transfer. The listing \ref{lst:OZTransferFrom} shows OpenZepplin's implementation of the function, which performs the allowance check on line 16 and the update of the allowance on line 21. The balances update is similar to the transfer function from listing \ref{lst:OZTransfer}, except that the parameter `_from` is used instead of `msg.sender` as the debtor.
 
-```{caption="OpenZepplin's implementation of ERC20's transferFrom function." label="lst:OZTransferFrom" language=Solidity}
-/**
- * @dev Transfer tokens from one address to another
- * @param _from address The address which you want to send tokens from
- * @param _to address The address which you want to transfer to
- * @param _value uint256 the amount of tokens to be transferred
- */
-function transferFrom(
-  address _from,
-  address _to,
-  uint256 _value
-)
-  public
-  returns (bool)
-{
-  require(_value <= balances[_from]);
-  require(_value <= allowed[_from][msg.sender]);
-  require(_to != address(0));
-
-  balances[_from] = balances[_from].sub(_value);
-  balances[_to] = balances[_to].add(_value);
-  allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);
-  emit Transfer(_from, _to, _value);
-  return true;
-}
-```
-
+\begin{minipage}{\linewidth}\centering
+\lstinputlisting[caption={OpenZepplin's implementation of ERC20's transferFrom function.},label=lst:OZTransferFrom,language=Solidity]{lst/oztransferfrom.sol}
+\end{minipage}
 
 ## Strengths And Weaknesses Of ERC20
 
@@ -118,7 +60,7 @@ At the other end of the spectrum however, this translates to a higher burden on 
 
 One of the largest issues is that the sender must make a distinction between a regular account and a contract recipient when transferring tokens. There are no issues if the recipient is a regular account, `transfer` just works. Alternatively, calling `approve` with the correct amount and let the recipient call `transferFrom` is also acceptable. The \gls{ux} in this latter case is somewhat suboptimal as it requires off-chain communication, two transactions, and the recipient has to pay the gas for the second transaction. Nonetheless the intended goal is achieved and the transfer from the spender to the recipient is executed.
 
-The same cannot be said if the recipient is a contract account. When using `transfer` to send tokens to a contract, the spender initiates the transfer and only communicates with the token contract the recipient is never notified---as previously shown in figure \ref{fig:erc20transfer}. The result is that while the token balance of the receiving contract is increased, that contract may never be able to use and spend the tokens it received---this situation is commonly referred to as "locked tokens". A simple proof is the Tronix contract whose `transfer` function was discussed before. A rapid look at the token balance of the Tronix contract---deployed at itself shows a balance of 5'504'504.3514 TRX as of August 8^th^ 2018. With an exchange rate of $0.0272, this represent a value of just a little under 150,000 US dollars. By analysing the code, one can see there are no functions which would allow the contract to spend those tokens. There are of course many more similar examples of such scenarios where people sent tokens either to the token contract, or some other contract by mistake and the amounts add up quickly.
+The same cannot be said if the recipient is a contract account. When using `transfer` to send tokens to a contract, the spender initiates the transfer and only communicates with the token contract the recipient is never notified---as previously shown in figure \ref{fig:erc20transfer}. The result is that while the token balance of the receiving contract is increased, that contract may never be able to use and spend the tokens it received---this situation is commonly referred to as "locked tokens". A simple proof is the Tronix contract whose `transfer` function was discussed before. A rapid look at the token balance of the Tronix contract---deployed at itself shows a balance of 5'504'504.3514 TRX as of August 8^th^ 2018. With an exchange rate of \$0.0272, this represent a value of just a little under 150,000 US dollars. By analysing the code, one can see there are no functions which would allow the contract to spend those tokens. There are of course many more similar examples of such scenarios where people sent tokens either to the token contract, or some other contract by mistake and the amounts add up quickly.
 
 ### Approval Race Condition
 

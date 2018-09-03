@@ -31,11 +31,11 @@ fast: .gen-tex
 	@echo "PDF generated: $(DIST_DIR)/$(OUTPUT_FILE).pdf"
 
 .tex: .gen-tex
-	xelatex -output-directory="$(BUILD)" "$(OUTPUT)"
+	xelatex -output-directory="$(BUILD)" "$(OUTPUT)" > /dev/null
 	makeglossaries -d "$(BUILD)" "$(OUTPUT_FILE)"
-	xelatex -output-directory="$(BUILD)"  "$(OUTPUT)"
+	xelatex -output-directory="$(BUILD)"  "$(OUTPUT)" > /dev/null
 	bibtex "$(OUTPUT)"
-	xelatex -output-directory="$(BUILD)"  "$(OUTPUT)"
+	xelatex -output-directory="$(BUILD)"  "$(OUTPUT)" > /dev/null
 	xelatex -output-directory="$(BUILD)" "$(OUTPUT)"
 	mv "$(OUTPUT).pdf" "$(DIST_DIR)/"
 	@echo "PDF generated: $(DIST_DIR)/$(OUTPUT_FILE).pdf"
@@ -60,11 +60,12 @@ clean:
 
 .gen-tex: .build-dir abstract.md acknowledgements.md
 	pandoc --number-sections --template=template/template.tex --toc --listings \
-	  --from markdown+tex_math_dollars+tex_math_single_backslash+multiline_tables --natbib \
+	  --from markdown+tex_math_dollars+tex_math_single_backslash+raw_attribute --natbib \
 		--variable="abstract_file:$(BUILD)/abstract.tex" --variable="acknowledgements_file:$(BUILD)/acknowledgements.tex" \
 		--output "$(OUTPUT).tex" metadata.yml chapters/*.md
 	cp -r ./lib/* "$(BUILD)/"
 	cp -r ./fonts "$(BUILD)/"
+	cp -r ./lst "$(BUILD)/"
 	cp -r ./img "$(BUILD)/"
 	cp -r ./fig "$(BUILD)/"
 	cp "glossary.tex" "$(BUILD)/glossary.tex"

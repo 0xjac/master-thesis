@@ -49,34 +49,9 @@ Finally, the contract suffers from a significant security flaw. Essentially the 
 
 In greater details, the flaw was exploited live in the ATN token \citep{atnreport} \citep{secbit2018lacking}, an instance of the ERC223 implementation containing the flawed custom fallback. The attack comes from the unsafe assumption that a spender will pass a function to call on the recipient such that the recipient is able to react to the delivery of tokens. Albeit this may be the intended use it cannot be enforced and the spender is free to specify any function that the token contract will then call. For the ATN token contract\footnote{\href{https://etherscan.io/address/0x461733c17b0755ca5649b6db08b3e213fcf22546}{Deployed at 0x461733c17b0755ca5649b6db08b3e213fcf22546}}, the attacker decided to transfer zero tokens (a transfer of `0` token is considered valid) to the token contract itself. Therefore the token contract was also the recipient contract and it will call any function on itself. This is an interesting scenario as access control in Ethereum is often enforced by looking at the address from which the call originated (`msg.sender` in Solidity). Often some functions are only executed if they are called by the owner of the contract (the address which deployed the contract in the first place) or the contract itself. The `ds-auth` library applies this principle exactly---as shown in listing \ref{lst:dsauth}---and it was taken advantage of by the attacker.
 
-```{caption="The \texttt{auth} modifier and the \texttt{setOwner} function from the \texttt{ds-auth} library which let the ATN attacker gain ownership of the token contract." label="lst:dsauth" language=Solidity}
-function setOwner(address owner_)
-    public
-    auth
-{
-    owner = owner_;
-    emit LogSetOwner(owner);
-}
-
-// ...
-
-modifier auth {
-    require(isAuthorized(msg.sender, msg.sig));
-    _;
-}
-
-function isAuthorized(address src, bytes4 sig) internal view returns (bool) {
-    if (src == address(this)) {
-        return true;
-    } else if (src == owner) {
-        return true;
-    } else if (authority == DSAuthority(0)) {
-        return false;
-    } else {
-        return authority.canCall(src, this, sig);
-    }
-}
-```
+\begin{minipage}{\linewidth}\centering
+\lstinputlisting[caption={[The \texttt{auth} modifier and the \texttt{setOwner} function from the \texttt{ds-auth} library]The \texttt{auth} modifier and the \texttt{setOwner} function from the \texttt{ds-auth} library which let the ATN attacker gain ownership of the token contract.},label=lst:dsauth,language=Solidity]{lst/dsauth.sol}
+\end{minipage}
 
 The scenario of the attack is illustrated in figure \ref{fig:customcallattack}. First the attacker managed to hijack the contract with a first transaction\footnote{\url{https://etherscan.io/tx/0x3b7bd618c49e693c92b2d6bfb3a5adeae498d9d170c15fcc79dd374166d28b7b}} to transfer zero tokens and then asked the token contract to call the `setOwner` function on itself---to "notify" the contract of the zero tokens it receiveds. Normally the access to this function is limited thanks to the use of `ds-auth` but in this case the call came from the contract itself and was therefore authorised. Obviously the attacker set his own address as the new owner and thus gain control of the contract. At this point the attacks has the ability to call functions---as the owner---that other addresses are not able to call, namely the `mint` function to issue new tokens. With its second transaction\footnote{\url{https://etherscan.io/tx/0x9b559ffae76d4b75d2f21bd643d44d1b96ee013c79918511e3127664f8f7a910}} the attacked mined eleven million ATN tokens for itself. Finally, in an attempt to cover its tracks, the attacker set the owner back to the original owner with a third transaction\footnote{\url{https://etherscan.io/tx/0xfd5c2180f002539cd636132f1baae0e318d8f1162fb62fb5e3493788a034545a}}.
 

@@ -60,15 +60,9 @@ State variables are variables whose values are permanently stored with the contr
 
 Function modifiers are specific functions associated with the regular functions of a contract. The modifiers are called before the actual function and thus have the ability to change the behaviour of the function. They are very popular to provide access-control to functions which use should be limited according to specific conditions.
 
-```{caption="OpenZepplin's implementation of the \texttt{onlyOwner} modifier which restrict the access to the owner of the contract." label="lst:OZOnlyOwner" language=Solidity}
-/**
-   * @dev Throws if called by any account other than the owner.
-   */
-  modifier onlyOwner() {
-    require(msg.sender == owner);
-    _;
-}
-```
+\begin{minipage}{\linewidth}\centering
+\lstinputlisting[caption={[OpenZepplin's implementation of the \texttt{onlyOwner} modifier]OpenZepplin's implementation of the \texttt{onlyOwner} modifier which restrict the access to the owner of the contract.},label=lst:OZOnlyOwner,language=Solidity]{lst/onlyOwner.sol}
+\end{minipage}
 
 The listing \ref{lst:OZOnlyOwner} shows the implementation of a modifier which uses `require` to revert the transaction if the condition is not met and the strange `_;` syntax which is replaced with the bytecode of the function the modifier is associated with during the call of the actual function.
 
@@ -129,24 +123,9 @@ Finally, to help with clarity, some of the parameters of functions may be omitte
 
 As an example let use consider the example code for a centralised administrator from the Ethereum website \citep{ethowner}---shown in the listing \ref{lst:owner}.
 
-```{caption="Centralised administrator contract, example from the Ethereum Foundation website." label="lst:owner" language=Solidity}
-contract owned {
-    address public owner;
-
-    function owned() {
-        owner = msg.sender;
-    }
-
-    modifier onlyOwner {
-        require(msg.sender == owner);
-        _;
-    }
-
-    function transferOwnership(address newOwner) onlyOwner {
-        owner = newOwner;
-    }
-}
-```
+\begin{minipage}{\linewidth}\centering
+\lstinputlisting[caption={[Centralised administrator contract]Centralised administrator contract, example from the Ethereum Foundation website.},label=lst:owner,language=Solidity]{lst/admin.sol}
+\end{minipage}
 
 The figure \ref{fig:uml} illustrate a modified \gls{uml} diagram between two regular accounts---Alice and Bob---and the contract Carlos implementing the centralised administrator---whose code is written in the listing \ref{lst:owner}. In the depicted scenario, Alice is the current owner of Carlos. She begins by making a transaction which calls `transferOwnership` on Carlos which first verifies if Alice is the current owner thanks to the `onlyOwner` modifier and then update the state of Carlos to set Bob as the new owner of the contract.
 
