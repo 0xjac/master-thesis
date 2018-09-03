@@ -2,9 +2,9 @@
 \centering
 \resizebox{\linewidth}{!}{%
 \begin{tikzpicture}[thick]
-  \begin{umlpackage}[x=3]{ERC820}
+  \begin{umlpackage}[x=3,fill=MidnightBlue!20]{ERC820}
 
-    \umlclass{ERC820Registry}{
+    \umlclass[fill=solarizedbeige]{ERC820Registry}{
     \# ERC820\_ACCEPT\_MAGIC : bytes32 = keccak256( \\\qquad abi.encodePacked("ERC820\_ACCEPT\_MAGIC")) \\
     \# interfaces : mapping (address => mapping(bytes32 => address)) \\
     \# managers : mapping (address => address) \\
@@ -15,7 +15,7 @@
     \uwave{+ getManager(): address} \\
     \umlstatic{+ interfaceHash() : bytes32} \\
     }
-    \umlclass[x=9]{ERC820Implementer}{
+    \umlclass[fill=solarizedbeige,x=9]{ERC820Implementer}{
       erc820Registry: ERC820Registry
     }{
     \# setInterfaceImplementation() \\
@@ -25,8 +25,8 @@
 
     \umlHVuniaggreg{ERC820Implementer}{ERC820Registry}
   \end{umlpackage}
-  \begin{umlpackage}[x=0,y=-9]{ERC777}
-    \umlclass[y=-8,type=interface]{ERC20Token}{}{
+  \begin{umlpackage}[fill=MidnightBlue!20,x=0,y=-9]{ERC777}
+    \umlclass[fill=solarizedbeige,y=-8,type=interface]{ERC20Token}{}{
     \umlvirt{\uwave{name() : string}}\\
     \umlvirt{\uwave{symbol() : string}}\\
     \umlvirt{\uwave{decimals() : uint8}}\\
@@ -37,7 +37,7 @@
     \umlvirt{approve() : bool}\\
     \umlvirt{\uwave{allowance() : uint256}}
     }
-    \umlclass[type=interface]{ERC777Token}{}{
+    \umlclass[fill=solarizedbeige,type=interface]{ERC777Token}{}{
     \umlvirt{\uwave{name() : string}}\\
     \umlvirt{\uwave{symbol() : string}}\\
     \umlvirt{\uwave{totalSupply() : uint256}}\\
@@ -52,7 +52,7 @@
     \umlvirt{burn()}\\
     \umlvirt{operatorBurn()}
     }
-    \umlclass[x=9,y=-8]{ERC777ERC20BaseToken}{
+    \umlclass[fill=solarizedbeige,x=9,y=-8]{ERC777ERC20BaseToken}{
     \# mAllowed : mapping(address => mapping(address => uint256))
     }{
     \uwave{+ name() : string} \\
@@ -65,7 +65,7 @@
     + approve() : bool \\
     \uwave{+ allowance() : uint256 }
     }
-    \umlclass[x=10]{ERC777BaseToken}{
+    \umlclass[fill=solarizedbeige,x=10]{ERC777BaseToken}{
     \# mBalances : mapping(address => uint) \\
     \# mDefaultOperators : address[] \\
     \# mIsDefaultOperator : mapping(address => bool) \\
@@ -93,8 +93,8 @@
 
     \umlVHVinherit[weight=0.6]{ERC777BaseToken}{ERC820Implementer}
 
-    \begin{umlpackage}[x=11,y=-14]{example}
-      \umlclass[x=2]{ReferenceToken}{}{
+    \begin{umlpackage}[fill=MidnightBlue!20,x=11,y=-14]{example}
+      \umlclass[fill=solarizedbeige,x=2]{ReferenceToken}{}{
       + disableERC20() onlyOwner \\
       + enableERC20() onlyOwner \\
       + mint() onlyOwner \\

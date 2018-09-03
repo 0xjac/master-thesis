@@ -20,6 +20,8 @@ The `transfer` and `transferFrom` functions are used to move tokens across addre
 
 As seen on figure \ref{fig:erc20transfer} when performing a transfer, the spender emits a transaction which calls the token contract and updates the balances accordingly. The recipient is never involved in the transaction. The logic to update the balance is entirely done within the token contract, in the `transfer` function.
 
+\pagebreak
+
 Examples of the implementation details to update the balances are shown in listings \ref{lst:OZTransfer} and \ref{lst:TronixTransfer}.
 
 \begin{minipage}{\linewidth}\centering
@@ -32,21 +34,27 @@ The first check ensures that the token holder---here referred to as the sender--
 
 The second checks ensure that the recipient---defined in the parameter `_to`---is not the zero address. The notation `address(0)` is a cast of the number literal zero to a 20 bits address. The zero address is a special address. Sending tokens to the zero address is assimilated to burning the tokens. Ideally the balance of the zero address should not be updated in this case. This is not always the case, tokens such as Tronix are held by the zero address. A quick look at their implementation shown in listing \ref{lst:TronixTransfer} of the transfer function shows there is no check to ensure the recipient is not the zero address. Note that the `validAddress` modifier only verifies the `msg.sender` or in other words, the spender, not the recipient.
 
+The `transferFrom` function is the second function available to transfer tokens between addresses. It's use is depicted in figure \ref{fig:erc20transferFrom}. It takes three parameters the debtor address, the creditor address and the number of tokens to transfer.
+
 \begin{minipage}{\linewidth}\centering
 \lstinputlisting[caption={Tronix transfer function.},label=lst:TronixTransfer,language=Solidity]{lst/tronixtransfer.sol}
 \end{minipage}
 
-The `transferFrom` function is the second function available to transfer tokens between addresses. It's use is depicted in figure \ref{fig:erc20transferFrom}. It takes three parameters the debtor address, the creditor address and the number of tokens to transfer.
+The reason for the existence of this second function to transfer tokens is for contracts. Contracts usually need to react when receiving tokens---for example to increase a balance internally in a mapping. When a normal `transfer` is called to send tokens to a contract, the receiving contract is never called and cannot react. Contracts are also not able to listen to events, making it impossible for a contract to react to a `Transfer` event. The `transferFrom` lets the token contract transfer the tokens from someone else to itself or others. At first glance this appears to be insecure as it lets anyone withdraw tokens from any address. This is where the `approve` and `allowance` functions come into play. The specification for the `transferFrom` function state that "[t]he function SHOULD `throw` unless the `_from` account has deliberately authorised the sender of the message via some mechanism" \citep{erc20}. The `approve` function the standard mechanism to authorise a sender to call `transferFrom`.
 
 \input{fig/transferFrom.tex}
 
-The reason for the existence of this second function to transfer tokens is for contracts. Contracts usually need to react when receiving tokens---for example to increase a balance internally in a mapping. When a normal `transfer` is called to send tokens to a contract, the receiving contract is never called and cannot react. Contracts are also not able to listen to events, making it impossible for a contract to react to a `Transfer` event. The `transferFrom` lets the token contract transfer the tokens from someone else to itself or others. At first glance this appears to be insecure as it lets anyone withdraw tokens from any address. This is where the `approve` and `allowance` functions come into play. The specification for the `transferFrom` function state that "[t]he function SHOULD `throw` unless the `_from` account has deliberately authorised the sender of the message via some mechanism" \citep{erc20}. The `approve` function the standard mechanism to authorise a sender to call `transferFrom`. Consider an ERC20 token, a regular user Alice and a contract Carlos. Alice wishes to send five tokens to Carlos to purchase a service offered by Carlos. If she uses the `transfer` function, the contract will never be made aware of the five tokens it received and will not activate the service for Alice. Instead, Alice can call `approve` to allow Carlos to transfer five of Alice's tokens. Anyone can then call `allowance` to check that Alice did in fact allow Carlos to transfer the five tokens from Alice's balance. Alice can then call a public function of Carlos or notify off-chain the maintainers of the Carlos contract such that they can call the function. This function of Carlos can call the `transferFrom` function of the token contract to receive the five tokens from Alice.
+Consider an ERC20 token, a regular user Alice and a contract Carlos. Alice wishes to send five tokens to Carlos to purchase a service offered by Carlos. If she uses the `transfer` function, the contract will never be made aware of the five tokens it received and will not activate the service for Alice. Instead, Alice can call `approve` to allow Carlos to transfer five of Alice's tokens. Anyone can then call `allowance` to check that Alice did in fact allow Carlos to transfer the five tokens from Alice's balance. Alice can then call a public function of Carlos or notify off-chain the maintainers of the Carlos contract such that they can call the function. This function of Carlos can call the `transferFrom` function of the token contract to receive the five tokens from Alice.
 
-The internals of the `transferFrom` function are similar to those of the `transfer` function. The main differences are that the debtor address is not `msg.sender` but the value of the `_from` parameter, and there is---in most cases---an additional check to make sure whoever calls `transferFrom` is allowed to withdraw tokens of the `_from` address. of course, the allowed amount is updated as well for a successful transfer. The listing \ref{lst:OZTransferFrom} shows OpenZepplin's implementation of the function, which performs the allowance check on line 16 and the update of the allowance on line 21. The balances update is similar to the transfer function from listing \ref{lst:OZTransfer}, except that the parameter `_from` is used instead of `msg.sender` as the debtor.
+\pagebreak
+
+The internals of the `transferFrom` function are similar to those of the `transfer` function. The main differences are that the debtor address is not `msg.sender` but the value of the `_from` parameter, and there is---in most cases---an additional check to make sure whoever calls `transferFrom` is allowed to withdraw tokens of the `_from` address.
 
 \begin{minipage}{\linewidth}\centering
 \lstinputlisting[caption={OpenZepplin's implementation of ERC20's transferFrom function.},label=lst:OZTransferFrom,language=Solidity]{lst/oztransferfrom.sol}
 \end{minipage}
+
+Of course, the allowed amount is updated as well for a successful transfer. The listing \ref{lst:OZTransferFrom} shows OpenZepplin's implementation of the function, which performs the allowance check on line 16 and the update of the allowance on line 21. The balances update is similar to the transfer function from listing \ref{lst:OZTransfer}, except that the parameter `_from` is used instead of `msg.sender` as the debtor.
 
 ## Strengths And Weaknesses Of ERC20
 
