@@ -6,13 +6,13 @@
     \umlactor[scale=0.6,class=Token Holder,fill=white!0]{Alice}
     \umlobject[no ddots,fill=white!0,x=3.2]{Token Contract}
     \umlobject[no ddots,fill=white!0,x=9.2]{ERC820 Registry}
-    \umlobject[class=TokensSender,fill=white!0,x=11,y=-.7]{Carole}
+    \umlobject[class=TokensSender,fill=white!0,x=11,y=-.7]{Carol}
     \umlobject[class=Recipient,fill=white!0,x=13]{Carlos}
     \begin{umlcall}[dt=6,op={send(Carlos, 10)},draw=BrickRed,fill=BrickRed!20]{Alice}{Token Contract}
       \begin{umlfragment}[type={\shortstack[l]{tokensToSend\\ hook}},name=tokensToSend]
-        \begin{umlcall}[dt=6,op={\shortstack[l]{getInterfaceImplementer(\\\qquad Alice, ERC777TokensSender)}},draw=MidnightBlue,fill=MidnightBlue!20,return=Carole]{Token Contract}{ERC820 Registry}
+        \begin{umlcall}[dt=6,op={\shortstack[l]{getInterfaceImplementer(\\\qquad Alice, ERC777TokensSender)}},draw=MidnightBlue,fill=MidnightBlue!20,return=Carol]{Token Contract}{ERC820 Registry}
         \end{umlcall}
-        \begin{umlcall}[dt=6,op={\shortstack[l]{tokensToSend(Alice, Alice, Carlos, 10)}},draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Carole}
+        \begin{umlcall}[dt=6,op={\shortstack[l]{tokensToSend(Alice, Alice, Carlos, 10)}},draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Carol}
         \end{umlcall}
       \end{umlfragment}
       \begin{umlcall}[dt=1,op={\shortstack[l]{update\\ balances}},draw=MidnightBlue,fill=MidnightBlue!20]{Token Contract}{Token Contract}
@@ -26,7 +26,7 @@
     \end{umlcall}
     \umlsdnode[dt=15]{ERC820 Registry}
     \umlsdnode[dt=6]{Carlos}
-    \umlsdnode[dt=36]{Carole}
+    \umlsdnode[dt=36]{Carol}
   \end{umlseqdiag}
   \filldraw[draw=BrickRed,fill=BrickRed!20] (0,-10) circle (.2);
   \node at (1.2,-10) {Transaction};

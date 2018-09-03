@@ -8,4 +8,4 @@ Adjacently, I would like to thank anyone who helped and is currently helping ERC
 
 Subsequently, I would like to thank Bity and in particular its CEO Alexis Roussel and CTO Alejandro Avilés (OmeGak) for allowing to work on my thesis during company time as well as to provide me with the necessary contacts to assist me during my thesis.
 
-Finally, I would like to express a big thanks to Thomas Shabbabi who agreed to be my co-advisor and devoted a significant amount of his time to follow me and assist me over the course of an entire year both with technical and human aspects of my work.
+Finally, I would like to express a big thanks to Thomas Shababi who agreed to be my co-advisor and devoted a significant amount of his time to follow me and assist me over the course of an entire year both with technical and human aspects of my work.
