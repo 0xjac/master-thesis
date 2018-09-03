@@ -22,6 +22,10 @@ The ERC777 standard is lucky to already have wide community support and acceptan
 
 Meeting the community and providing talks such as the one at EthCC in Paris (see figure \ref{fig:ethcc}), back in March 2018 \citep{ethcc} are also important. We hope to have the opportunity to talk about ERC777 at future Ethereum events including the Web3 summit in Berlin, the Ethereum Magicians' Council of Prague and Devcon4 also in Prague.
 
+Moreover we try to contribute to other projects which help the adoption of the standard, such as writting a paragraph\footnote{\href{https://github.com/ethereumbook/ethereumbook/pull/611}{First Mastering Ethereum pull request about ERC777: github.com/ethereumbook/ethereumbook/pull/611}}\footnote{\href{https://github.com/ethereumbook/ethereumbook/pull/612}{Second Mastering Ethereum pull request about ERC777: github.com/ethereumbook/ethereumbook/pull/612}} for the upcoming book "Mastering Ethereum" \citep{antonopoulos2018mastering} which was well received as shown in figure \ref{fig:masteringethcomment}.
+
+\input{fig/masteringethcomment}
+
 ## Assistance For ERC777 Token Designers
 
 The ERC777 token standard is more complex than the ERC20 standard and we plan on working with the first token designers to make sure the understand the standard correctly and release compliant implementations.
