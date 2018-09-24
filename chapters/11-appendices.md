@@ -1,4 +1,6 @@
 \appendix
+\appendixpage
+\addappheadtotoc
 
 # The `devdoc` And `userdoc` Raw \acrshort{json} Data Of The ERC820 Registry
 

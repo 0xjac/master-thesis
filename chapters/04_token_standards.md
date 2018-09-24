@@ -60,7 +60,7 @@ Of course, the allowed amount is updated as well for a successful transfer. The 
 
 Overall the ERC20 token standard was kept simple in its design. Hence the standard results in simple token contracts. This is one of the upsides of the standard. Token contracts can be kept short and simple which makes them easy and cheap to audit. This is especially important as an insecure contract may result in funds being stolen or lost from the contract and good smart contract auditors are expensive and often unavailable.
 
-The attack described in chapter ref{erc827} and illustrated in figure \ref{fig:customcallattack} is a perfect evidence of the issues that arise when using a more complex token standard. In this specific instance, the complexity of the design contributed to a flaw not being detected in a token contract which leads to an attacker fraudulently issuing eleven million tokens.
+The attack described in chapter \ref{erc827} and illustrated in figure \ref{fig:customcallattack} is a perfect evidence of the issues that arise when using a more complex token standard. In this specific instance, the complexity of the design contributed to a flaw not being detected in a token contract which leads to an attacker fraudulently issuing eleven million tokens.
 
 At the other end of the spectrum, however, this translates to a higher burden on the user, applications and wallets interacting with the tokens.
 

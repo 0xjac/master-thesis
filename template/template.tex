@@ -10,6 +10,7 @@
 \usepackage{tabu}
 \usepackage{fnpct}
 \usepackage[normalem]{ulem}
+\usepackage{appendix}
 
 % \newfontfamily\cyrillicfont[Script = Cyrillic]{LinLibertine}
 \newfontfamily\cyrillicfont[  BoldFont        = LinLibertine_RB.otf,
@@ -425,6 +426,8 @@ $body$
 
 $if(natbib)$
 $if(bibliography)$
+\cleardoublepage
+\phantomsection
 $if(biblio-title)$
 $if(book-class)$
 \renewcommand\bibname{$biblio-title$}
@@ -432,6 +435,7 @@ $else$
 \renewcommand\refname{$biblio-title$}
 $endif$
 $endif$
+\addcontentsline{toc}{chapter}{$biblio-title$}
 \bibliography{references}
 $endif$
 $endif$
