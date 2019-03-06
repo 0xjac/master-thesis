@@ -1,6 +1,6 @@
 # The State Of Tooling In The Ethereum Ecosystem
 
-The Ethereum ecosystem is still very new as a result the specific tools and libraries required are also either in their infancy or lacking. The existing tools and libraries are often still in alpha, beta or zero prefixed versions---Solidity itself is only at version `0.4`. This means they are often unstable, and with changing interfaces. The Ethereum in some respect tries to build a newer and more decentralised web, this is why the main library is called \gls{web3}, and the most mature version of it is written in JavaScript. A lot of the tooling is written using \gls{node}. Reminiscent of the JavaScript ecosystem, the Ethereum ecosystem moves fast, even faster than JavaScript's, and the language syntax, tools and libraries are constantly changing.
+The Ethereum ecosystem is still very new and as a result the specific tools and libraries required are also either in their infancy or lacking. The existing tools and libraries are often still in alpha, beta or zero prefixed versions---Solidity itself is only at version `0.4`. This means they are often unstable, and with changing interfaces. Ethereum in some respect tries to build a newer and more decentralised web, this is why the main library is called \gls{web3}, and the most mature version of it is written in JavaScript. A lot of the tooling is written using \gls{node}. Reminiscent of the JavaScript ecosystem, the Ethereum ecosystem moves fast, even faster than JavaScript's, and the language syntax, tools and libraries are constantly changing.
 
 ## Compilation
 
@@ -9,6 +9,8 @@ The Solidity Compiler named `solc` is written in C++, but JavaScript bindings na
 A lot of these wrappers add features such as partial recompilation by only recompiling contracts which have changed, setting the version of Solidity to use for the compilation and more. The `truffle` suite includes more than a simple wrapper around `solcjs` and includes migration logic for smart contracts as well as a testing framework. Ultimately, we had to use `truffle` at the time as it offered one of the only coverage tools for the test of the ERC777 reference implementation.
 
 In comparison for the ERC820 registry, Giveth's `solcpiler` is used as it provides us with a greater control over the compilation process which is a critical aspect as it is paramount to have reproducible builds such that people can compile the source code on their own and obtain the same bytecode in order to convince themselves that the deployed bytecode matches the source file.
+
+\pagebreak
 
 > Tools such as drawbridge which provide deterministic builds are critical for wallets and similar applications to ensure verifiable security. \flushright (Daniel Ternyak, CEO of grant.io,  
 former CTO of MyEtherWallet & MyCrypto)
@@ -49,6 +51,8 @@ Overall, a dynamic analysis of gas usage is an interesting metric which provides
 Implementing a profiler capable of performing a static analysis of the code to evaluate gas consumption is a more complicated task. First no existing tool---such as the `eth_estimateGas` for dynamic analysis---exists.
 
 Second, unlike a dynamic approach which is trivially capable of returning the gas consumption as a single number given the parameters, a static tool may not be able to do so. For example if the code contains an iteration over an array whose length is not known at compile time, then the gas consumption will be expressed as a formula like $X + n \cdot Y$ where $X$ is the gas used by the code outside the iterations, $n$ represents the number of iterations and $X$ is the gas used by a single iteration. Note that the values of $X$ and $Y$ are computed by the tool, but the value of $n$ is never known, an actual example (in wei) could be $29000 + n \cdot 3700$.
+
+\pagebreak
 
 > We need tools such as a static gas profiler. It is a project I would be happy to support. \flushright (Daniel Ternyak, CEO of grant.io,  
 former CTO of MyEtherWallet & MyCrypto)

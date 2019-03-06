@@ -8,7 +8,7 @@ The reference implementation described in section \ref{reference-implementation}
 
 ## Generic Operators And Hooks For ERC777 End-Users
 
-ERC777 does more than solving some of the shortcomings of ERC200 and provides novel features such as operators, hooks and the data field. Those features bring new possibilities and novel approaches to tackle problems related to token.
+ERC777 does more than solving some of the shortcomings of ERC20 and provides novel features such as operators, hooks and the data field. Those features bring new possibilities and novel approaches to tackle problems related to token.
 
 Generic operators and hooks are an exciting concept which aims to deploy in a trustless fashion---for example using the same keyless deployment method as the ERC820 registry---operator contracts and hooks which may be used by any address. These generic hooks and operators allow less technically-inclined users to use the advanced features of ERC777 without having an in-depth technical knowledge of Ethereum required for example to deploy a contract.
 
@@ -16,11 +16,11 @@ Efforts must be spent researching how to adequately provide generic operators an
 
 ## Promotion Of The ERC777 Standard
 
-The ERC777 standard is lucky to have broad community support and acceptance already. We already see many people looking it creating their own ERC777 tokens. A simple look at the number of download of the ERC777 reference implementation via \gls{npm} which is over 230 or the over 50 stars on its Github repository. We can see the interest is picking up, but there is still a long way to go.
+The ERC777 standard is lucky to have broad community support and acceptance already. We already see many people looking it creating their own ERC777 tokens. A simple look at the number of download of the ERC777 reference implementation via \gls{npm} which is over 250 or the almost 60 stars on its Github repository. We can see the interest is picking up, but there is still a long way to go.
 
 \input{fig/ethcc}
 
-Meeting the community and providing talks such as the one at EthCC in Paris (see figure \ref{fig:ethcc}), back in March 2018 \citep{ethcc} are also important. We hope to have the opportunity to talk about ERC777 at future Ethereum events including the Web3 summit in Berlin, the Ethereum Magicians' Council of Prague and Devcon4 also in Prague.
+Meeting the community and providing talks such as the one at EthCC in Paris (see figure \ref{fig:ethcc}), back in March 2018 \citep{ethcc} are also important. We hope to have the opportunity to talk about ERC777 at future Ethereum events including the Web3 summit in Berlin.
 
 Moreover we try to contribute to other projects which help the adoption of the standard, such as writing a paragraph\footnote{\href{https://github.com/ethereumbook/ethereumbook/pull/611}{First Mastering Ethereum pull request about ERC777: github.com/ethereumbook/ethereumbook/pull/611}}\footnote{\href{https://github.com/ethereumbook/ethereumbook/pull/612}{Second Mastering Ethereum pull request about ERC777: github.com/ethereumbook/ethereumbook/pull/612}} for the upcoming book "Mastering Ethereum" \citep{antonopoulos2018mastering} which was well received as shown in figure \ref{fig:masteringethcomment}.
 

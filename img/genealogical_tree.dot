@@ -1,8 +1,10 @@
 digraph G {
   rankdir=TB;
-  node [fontname="helvetica", fontsize=40 ];
+  bgcolor="transparent";
+  edge [color="black", penwidth=4.0;];
+  node [fontname="helvetica", fontsize=60, fontcolor="black", penwidth=4.0;];
   subgraph timeline {
-    node [ shape=plaintext ];
+    node [ shape=plaintext, fontcolor="black" ];
     "Nov. 2015" ->
     "..." ->
     "Nov. 2016" ->
@@ -41,7 +43,7 @@ digraph G {
   ERC724 [ label="ERC724", URL="https://github.com/ethereum/EIPs/issues/724", style="filled,bold,rounded,dashed" ];
   ERC732 [ label="ERC732", URL="https://github.com/ethereum/EIPs/pull/732", style="filled,bold,rounded,dashed" ];
   ERC777 [ label="ERC777", URL="https://eips.ethereum.org/EIPS/eip-777", shape=box];
-  ERC827 [ label="ERC827", URL="https://github.com/ethereum/EIPs/issues/827", style="filled,bold,rounded,dashed", shape=box ];
+  ERC827 [ label="ERC827", URL="https://github.com/ethereum/EIPs/issues/827", style="filled,bold,rounded,dashed" ];
   ERC995 [ label="ERC995", URL="https://github.com/ethereum/EIPs/issues/995", style="filled,bold,rounded,dashed" ];
   ERC1003 [ label="ERC1003", URL="https://github.com/ethereum/EIPs/issues/1003", style="filled,bold,rounded,dashed" ];
   ERC1111 [ label="ERC1111", URL="https://github.com/ethereum/EIPs/issues/1111", style="filled,bold,rounded,dashed" ];
@@ -82,7 +84,7 @@ digraph G {
   }
 
   subgraph cluster_legend {
-    labelloc="t"
+    labelloc="t";
     label="Legend";
     rank=max;
     // margin="0.01"
