@@ -6,7 +6,7 @@ In this chapter, we will explore three of the main tokens standard proposals com
 
 ## ERC223
 
-ERC223 was submitted on March 5^th^ 2017, by a developer knows as Dexaran \citep{erc223}. It has one clear goal in mind: to address the issue of accidentally locking token in ERC20 (see section \ref{locked-tokens}).
+ERC223 was submitted on March 5^th^ 2017, by a developer known as Dexaran \citep{erc223}. It has one clear goal in mind: to address the issue of accidentally locking token in ERC20 (see section \ref{locked-tokens}).
 
 The solution suggested by this proposal is to define a `tokenFallback` function similar to the default fallback function \citepalias[see][Fallback Function]{soldoc}. This function takes as parameters the address of the spender (`from`), the amount of tokens transferred and a `data` field. Any contract wishing to receive tokens must implement this function.
 
